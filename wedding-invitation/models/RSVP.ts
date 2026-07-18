@@ -1,0 +1,32 @@
+// models/RSVP.ts
+import mongoose, { Schema, Document, Model } from "mongoose";
+
+export interface IRSVP extends Document {
+  guestName: string;
+  phone: string;
+  attendance: "yes" | "no" | "maybe";
+  guestCount: number;
+  message: string;
+  createdAt: Date;
+}
+
+const RSVPSchema = new Schema<IRSVP>(
+  {
+    guestName: { type: String, required: true, trim: true },
+    phone: { type: String, required: true, trim: true },
+    attendance: {
+      type: String,
+      enum: ["yes", "no", "maybe"],
+      required: true,
+      default: "yes",
+    },
+    guestCount: { type: Number, required: true, min: 1, default: 1 },
+    message: { type: String, default: "" },
+  },
+  { timestamps: true }
+);
+
+const RSVP: Model<IRSVP> =
+  mongoose.models.RSVP || mongoose.model<IRSVP>("RSVP", RSVPSchema);
+
+export default RSVP;
