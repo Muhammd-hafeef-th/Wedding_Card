@@ -3,7 +3,7 @@
 import { useLenis } from "@/hooks/useLenis";
 import { ReactNode } from "react";
 
-import AudioProvider from "@/components/ui/AudioProvider";
+import AudioWrapper from "@/components/ui/AudioWrapper";
 
 function LenisProvider({ children }: { children: ReactNode }) {
   useLenis();
@@ -13,7 +13,7 @@ function LenisProvider({ children }: { children: ReactNode }) {
 export default function PageLayout({ children }: { children: ReactNode }) {
   return (
     <LenisProvider>
-      <AudioProvider>{children}</AudioProvider>
+      <AudioWrapper>{children}</AudioWrapper>
     </LenisProvider>
   );
 }

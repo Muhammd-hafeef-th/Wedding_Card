@@ -15,41 +15,44 @@ export default function CountdownTimer({ date, time }: CountdownTimerProps) {
     { value: days, label: "Days" },
     { value: hours, label: "Hours" },
     { value: minutes, label: "Mins" },
-    { value: seconds, label: "Secs" },
+    { value: seconds, label: "Secs" }
   ];
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:gap-4">
-      {units.map((unit) => (
-        <motion.div
-          key={unit.label}
-          className="rounded-2xl border border-[#E8D7A7] bg-white/80 p-3 sm:p-4 text-center shadow-sm"
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <AnimatePresence mode="popLayout">
-            <motion.span
-              key={unit.value}
-              initial={{ opacity: 0, y: 5 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -5 }}
-              transition={{ duration: 0.25 }}
-              className="font-heading block text-[1.7rem] sm:text-[2.1rem] md:text-[2.4rem] font-semibold"
-              style={{ color: "var(--gold)", lineHeight: 1 }}
+    <div className="flex items-center justify-center gap-4 sm:gap-6">
+      {units.map((unit, idx) => (
+        <div key={idx} className="flex items-center gap-4 sm:gap-6">
+          <div className="flex flex-col items-center">
+            <AnimatePresence mode="popLayout">
+              <motion.span
+                key={unit.value}
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -5 }}
+                transition={{ duration: 0.3 }}
+                className="font-heading text-2xl sm:text-3xl md:text-4xl font-light"
+                style={{ color: "var(--gold)", lineHeight: 1 }}
+              >
+                {String(unit.value).padStart(2, "0")}
+              </motion.span>
+            </AnimatePresence>
+            <span
+              className="font-body uppercase tracking-[0.2em] text-[7px] sm:text-[8px] mt-1.5 opacity-70"
+              style={{ color: "var(--text-main)" }}
             >
-              {String(unit.value).padStart(2, "0")}
-            </motion.span>
-          </AnimatePresence>
-          <span
-            className="mt-2 block font-body uppercase tracking-[0.25em] text-[0.65rem] sm:text-[0.72rem]"
-            style={{ color: "#7D6F68" }}
-          >
-            {unit.label}
-          </span>
-        </motion.div>
+              {unit.label}
+            </span>
+          </div>
+          {idx < units.length - 1 && (
+            <span
+              className="text-lg opacity-40 font-light"
+              style={{ color: "var(--gold)", transform: "translateY(-6px)" }}
+            >
+              :
+            </span>
+          )}
+        </div>
       ))}
     </div>
   );
 }
-

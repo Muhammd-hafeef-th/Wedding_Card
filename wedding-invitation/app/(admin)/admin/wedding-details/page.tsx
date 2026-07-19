@@ -3,45 +3,50 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import GoldButton from "@/components/ui/GoldButton";
-import ImageUpload from "@/components/admin/ImageUpload";
+import AudioUpload from "@/components/admin/AudioUpload";
 import { WeddingData } from "@/types";
+import Swal from 'sweetalert2';
 
-const cardStyle = {
-  background: "var(--bg-card)",
-  border: "1px solid rgba(212,175,55,0.15)",
-  backdropFilter: "blur(10px)",
-  borderRadius: "16px",
-  padding: "2rem",
-  boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
+const cardStyle: React.CSSProperties = {
+  background: "linear-gradient(135deg, #FFFFFF 0%, #FCF7EA 100%)",
+  border: "1px solid rgba(212,175,55,0.2)",
+  borderRadius: "2rem",
+  padding: "clamp(1.25rem, 3vw, 2rem)",
+  boxShadow: "0 18px 45px -22px rgba(58,46,42,0.22)",
+  display: "flex",
+  flexDirection: "column",
+  gap: "1.25rem",
 };
 
 const inputStyle: React.CSSProperties = {
   width: "100%",
   border: "1px solid rgba(212,175,55,0.2)",
-  borderRadius: "10px",
-  padding: "0.75rem 1rem",
+  borderRadius: "1rem",
+  padding: "0.85rem 1.25rem",
   fontFamily: "'Poppins', sans-serif",
-  fontSize: "0.875rem",
-  color: "#F9F6F0",
-  background: "rgba(255,255,255,0.05)",
+  fontSize: "0.95rem",
+  color: "#3A2E2A",
+  background: "#FAF7F0",
   outline: "none",
+  transition: "all 0.3s ease",
+  boxShadow: "inset 0 2px 4px rgba(0,0,0,0.02)",
 };
 
 const labelStyle: React.CSSProperties = {
-  fontSize: "0.7rem",
-  letterSpacing: "0.2em",
+  fontSize: "0.75rem",
+  letterSpacing: "0.15em",
   textTransform: "uppercase",
-  color: "#D4AF37",
+  color: "#7D6F68",
   fontFamily: "'Poppins', sans-serif",
-  fontWeight: 500,
+  fontWeight: 600,
   display: "block",
-  marginBottom: "0.5rem",
+  marginBottom: "0.4rem",
+  marginLeft: "0.2rem",
 };
 
 export default function WeddingDetailsPage() {
   const [data, setData] = useState<Partial<WeddingData>>({});
   const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
 
   useEffect(() => {
     fetch("/api/wedding").then((r) => r.json()).then(setData).catch(console.error);
@@ -55,13 +60,37 @@ export default function WeddingDetailsPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-      if (res.ok) { setSaved(true); setTimeout(() => setSaved(false), 3000); }
-    } catch (e) { console.error(e); }
+      if (res.ok) { 
+        Swal.fire({
+          title: 'Saved Successfully!',
+          text: 'Wedding details have been updated.',
+          icon: 'success',
+          confirmButtonColor: '#D4AF37',
+          background: '#FFFDF8',
+          color: '#3A2E2A'
+        });
+      } else {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Failed to save details. Please try again.',
+          icon: 'error',
+          confirmButtonColor: '#D4AF37'
+        });
+      }
+    } catch (e) { 
+      console.error(e); 
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong.',
+        icon: 'error',
+        confirmButtonColor: '#D4AF37'
+      });
+    }
     setSaving(false);
   };
 
   const field = (key: keyof WeddingData, label: string, type = "text", placeholder = "") => (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col">
       <label style={labelStyle}>{label}</label>
       <input
         type={type}
@@ -69,108 +98,150 @@ export default function WeddingDetailsPage() {
         onChange={(e) => setData({ ...data, [key]: e.target.value })}
         placeholder={placeholder}
         style={inputStyle}
-        onFocus={(e) => (e.target.style.borderColor = "rgba(212,175,55,0.5)")}
-        onBlur={(e) => (e.target.style.borderColor = "rgba(212,175,55,0.2)")}
+        onFocus={(e) => {
+          e.target.style.borderColor = "#D4AF37";
+          e.target.style.boxShadow = "0 0 0 3px rgba(212,175,55,0.1)";
+        }}
+        onBlur={(e) => {
+          e.target.style.borderColor = "rgba(212,175,55,0.2)";
+          e.target.style.boxShadow = "inset 0 2px 4px rgba(0,0,0,0.02)";
+        }}
       />
     </div>
   );
 
   return (
-    <div className="p-8 min-h-screen">
-      <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-        <p className="text-xs tracking-[0.3em] uppercase mb-1" style={{ color: "#D4AF37", fontFamily: "'Poppins', sans-serif" }}>Admin</p>
-        <h1 className="font-heading mb-8" style={{ fontSize: "2.2rem", fontWeight: 400, color: "#F9F6F0" }}>Wedding Details</h1>
-      </motion.div>
+    <div style={{ padding: "clamp(1rem, 2.2vw, 1.75rem)", minHeight: "100vh", background: "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(212,175,55,0.05) 100%)" }}>
+      <div style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Basic Info */}
-        <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-          <h2 className="font-heading mb-6" style={{ fontSize: "1.3rem", fontWeight: 400, color: "#F9F6F0" }}>Basic Information</h2>
-          <div className="flex flex-col gap-4">
-            {field("title", "Wedding Title")}
-            {field("subtitle", "Subtitle / Tagline")}
-            {field("invitationText", "Invitation Text")}
-            {field("date", "Wedding Date", "date")}
-            {field("time", "Wedding Time", "time")}
-            {field("venue", "Venue Name")}
+        <motion.section
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          style={{
+            background: "linear-gradient(135deg, #FFFDF8 0%, #F7EFD8 100%)",
+            border: "1px solid rgba(212,175,55,0.22)",
+            borderRadius: "2rem",
+            padding: "clamp(1.25rem, 3vw, 2rem)",
+            boxShadow: "0 24px 60px -24px rgba(58, 46, 42, 0.25)",
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.75rem",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", flexWrap: "wrap" }}>
+            <span
+              style={{
+                width: "2.2rem",
+                height: "2.2rem",
+                borderRadius: "999px",
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "linear-gradient(135deg, #D4AF37 0%, #F3D98A 100%)",
+                color: "#3A2E2A",
+                fontSize: "1rem",
+                boxShadow: "0 8px 20px rgba(212,175,55,0.25)",
+              }}
+            >
+              💍
+            </span>
+            <p style={{ fontSize: "0.78rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#A8881E", fontWeight: 600 }}>
+              Wedding Admin
+            </p>
           </div>
-        </motion.div>
+          <h1 className="font-heading" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", lineHeight: 1.1, color: "#3A2E2A", fontWeight: 600 }}>
+            Wedding Details
+          </h1>
+        </motion.section>
 
-        {/* Couple Names */}
-        <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-          <h2 className="font-heading mb-6" style={{ fontSize: "1.3rem", fontWeight: 400, color: "#F9F6F0" }}>Groom</h2>
-          <div className="flex flex-col gap-4">
-            {field("groomFirstName", "First Name")}
-            {field("groomLastName", "Last Name")}
-            {field("groomFatherName", "Father's Name")}
-            {field("groomMotherName", "Mother's Name")}
-            {field("groomPaternalGrandparents", "Paternal Grandparents")}
-            {field("groomMaternalGrandparents", "Maternal Grandparents")}
-            {field("groomOccupation", "Occupation")}
-            <div className="flex flex-col gap-1">
-              <label style={labelStyle}>Biography</label>
-              <textarea
-                rows={3}
-                value={data.groomBio || ""}
-                onChange={(e) => setData({ ...data, groomBio: e.target.value })}
-                style={{ ...inputStyle, resize: "vertical" }}
-              />
+        <div className="grid grid-cols-1 xl:grid-cols-[1.5fr_1fr] gap-5 lg:gap-6">
+          <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-2xl">ℹ️</span>
+              <h2 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 600, color: "#3A2E2A" }}>Wedding Information</h2>
             </div>
-          </div>
-        </motion.div>
+            <div className="flex flex-col gap-5">
+              {field("invitationText", "Invitation Text")}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                {field("date", "Wedding Date", "date")}
+                {field("time", "Wedding Time", "time")}
+              </div>
+              {field("venue", "Venue Name")}
+              <AudioUpload value={data.heroMusicUrl || ""} onChange={(url) => setData({ ...data, heroMusicUrl: url })} folder="wedding/audio" label="Website Audio Track" />
+            </div>
+          </motion.div>
 
-        {/* Bride */}
-        <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
-          <h2 className="font-heading mb-6" style={{ fontSize: "1.3rem", fontWeight: 400, color: "#F9F6F0" }}>Bride</h2>
-          <div className="flex flex-col gap-4">
-            {field("brideFirstName", "First Name")}
-            {field("brideLastName", "Last Name")}
-            {field("brideFatherName", "Father's Name")}
-            {field("brideMotherName", "Mother's Name")}
-            {field("bridePaternalGrandparents", "Paternal Grandparents")}
-            {field("brideMaternalGrandparents", "Maternal Grandparents")}
-            {field("brideOccupation", "Occupation")}
-            <div className="flex flex-col gap-1">
-              <label style={labelStyle}>Biography</label>
-              <textarea
-                rows={3}
-                value={data.brideBio || ""}
-                onChange={(e) => setData({ ...data, brideBio: e.target.value })}
-                style={{ ...inputStyle, resize: "vertical" }}
-              />
+          <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-2xl">❤️</span>
+              <h2 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 600, color: "#3A2E2A" }}>Couple Names</h2>
             </div>
-          </div>
-        </motion.div>
+            <div className="flex flex-col gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                {field("brideFirstName", "Bride First Name")}
+                {field("brideLastName", "Bride Last Name")}
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                {field("groomFirstName", "Groom First Name")}
+                {field("groomLastName", "Groom Last Name")}
+              </div>
+            </div>
+          </motion.div>
+        </div>
 
-        {/* Media */}
-        <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-          <h2 className="font-heading mb-6" style={{ fontSize: "1.3rem", fontWeight: 400, color: "#F9F6F0" }}>Hero Section Media</h2>
-          <div className="flex flex-col gap-6">
-            <ImageUpload label="Hero Background" value={data.heroBackground} onChange={(url) => setData({ ...data, heroBackground: url })} folder="wedding/hero" />
-            <div className="flex flex-col gap-1">
-              <label style={labelStyle}>Background Music URL</label>
-              <input type="url" value={data.heroMusicUrl || ""} onChange={(e) => setData({ ...data, heroMusicUrl: e.target.value })} placeholder="https://..." style={inputStyle} />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-6">
+          <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-2xl">🤵</span>
+              <h2 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 600, color: "#3A2E2A" }}>Groom Details</h2>
             </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {field("groomFatherName", "Father's Name")}
+              {field("groomMotherName", "Mother's Name")}
+              {field("groomPaternalGrandparents", "Paternal Grandparents")}
+              {field("groomMaternalGrandparents", "Maternal Grandparents")}
+            </div>
+          </motion.div>
+
+          <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-2xl">👰</span>
+              <h2 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 600, color: "#3A2E2A" }}>Bride Details</h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              {field("brideFatherName", "Father's Name")}
+              {field("brideMotherName", "Mother's Name")}
+              {field("bridePaternalGrandparents", "Paternal Grandparents")}
+              {field("brideMaternalGrandparents", "Maternal Grandparents")}
+            </div>
+          </motion.div>
+        </div>
+
+        <motion.div
+          className="flex flex-col sm:flex-row items-center gap-4 mt-2 pb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <div className="w-full sm:w-auto">
+            <GoldButton onClick={handleSave} disabled={saving} className="flex items-center justify-center gap-3">
+              {saving ? (
+                <>
+                  <motion.div
+                    className="h-4 w-4 rounded-full border-2 border-t-transparent border-white"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  />
+                  <span>Saving Changes...</span>
+                </>
+              ) : (
+                "Save All Details"
+              )}
+            </GoldButton>
           </div>
         </motion.div>
       </div>
-
-      {/* Save Button */}
-      <motion.div
-        className="fixed bottom-8 right-8 flex items-center gap-3"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-      >
-        {saved && (
-          <span className="text-sm px-4 py-2 rounded-full" style={{ background: "rgba(100,200,100,0.15)", color: "#2d6a2d", fontFamily: "'Poppins', sans-serif" }}>
-            ✓ Saved!
-          </span>
-        )}
-        <GoldButton onClick={handleSave} disabled={saving}>
-          {saving ? "Saving..." : "Save Changes"}
-        </GoldButton>
-      </motion.div>
     </div>
   );
 }

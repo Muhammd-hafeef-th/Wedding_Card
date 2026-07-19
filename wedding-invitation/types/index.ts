@@ -97,10 +97,8 @@ export interface BrideGroomProfile {
 export interface RSVPEntry {
   _id?: string;
   guestName: string;
-  phone: string;
   attendance: "yes" | "no" | "maybe";
   guestCount: number;
-  message?: string;
   createdAt?: string;
 }
 

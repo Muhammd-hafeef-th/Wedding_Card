@@ -6,9 +6,9 @@ export interface IVenue extends Document {
   address: string;
   googleMapLink: string;
   googleMapEmbed: string;
-  parkingInfo: string;
-  accommodation: string;
-  imageUrl: string;
+  parkingInfo?: string;
+  accommodation?: string;
+  imageUrl?: string;
 }
 
 const VenueSchema = new Schema<IVenue>(
@@ -17,14 +17,8 @@ const VenueSchema = new Schema<IVenue>(
     address: { type: String, default: "123 Royal Avenue, New Delhi, India" },
     googleMapLink: { type: String, default: "" },
     googleMapEmbed: { type: String, default: "" },
-    parkingInfo: {
-      type: String,
-      default: "Complimentary valet parking available",
-    },
-    accommodation: {
-      type: String,
-      default: "Guest accommodations available at the venue hotel",
-    },
+    parkingInfo: { type: String, default: "" },
+    accommodation: { type: String, default: "" },
     imageUrl: { type: String, default: "" },
   },
   { timestamps: true }

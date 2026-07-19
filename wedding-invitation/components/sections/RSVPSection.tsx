@@ -73,7 +73,7 @@ export default function RSVPSection() {
                   <p className="font-body text-xs md:text-sm opacity-80" style={{ color: "var(--text-main)", fontWeight: 300, lineHeight: 1.6 }}>
                     Your response has been received. We can&apos;t wait to celebrate with you!
                   </p>
-                  <GoldButton onClick={() => setStatus("idle")} variant="outline" size="sm" className="mt-4">
+                  <GoldButton onClick={() => setStatus("idle")} size="md" className="mt-8">
                     Submit Another
                   </GoldButton>
                 </div>
