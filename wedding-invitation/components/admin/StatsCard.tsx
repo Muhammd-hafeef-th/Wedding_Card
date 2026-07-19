@@ -14,48 +14,76 @@ export default function StatsCard({ icon, label, value, sublabel, index = 0 }: S
   return (
     <motion.div
       style={{
+        position: "relative",
+        overflow: "hidden",
         display: "flex",
         flexDirection: "column",
-        padding: "1.5rem",
-        gap: "0.75rem",
-        background: "#FFFFFF",
+        padding: "1.2rem",
+        gap: "0.9rem",
+        background: "linear-gradient(135deg, #FFFFFF 0%, #FCF7EA 100%)",
         borderRadius: "1.5rem",
         border: "1px solid rgba(212,175,55,0.2)",
-        boxShadow: "0 10px 30px -10px rgba(212,175,55,0.1), 0 0 0 1px rgba(255,255,255,0.5) inset",
+        boxShadow: "0 16px 40px -20px rgba(58,46,42,0.22)",
       }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -4, boxShadow: "0 20px 40px -12px rgba(212,175,55,0.2), 0 0 0 1px rgba(255,255,255,0.5) inset" }}
+      whileHover={{ y: -4, boxShadow: "0 24px 50px -18px rgba(212,175,55,0.24)" }}
     >
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.25rem" }}>
-        <span style={{ fontSize: "1.5rem" }}>{icon}</span>
+      <div
+        style={{
+          position: "absolute",
+          top: "-24px",
+          right: "-24px",
+          width: "120px",
+          height: "120px",
+          background: "radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 72%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.1rem" }}>
+        <div
+          style={{
+            width: "3rem",
+            height: "3rem",
+            borderRadius: "1rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "rgba(255,255,255,0.95)",
+            border: "1px solid rgba(212,175,55,0.14)",
+            boxShadow: "0 8px 18px rgba(212,175,55,0.08)",
+          }}
+        >
+          <span style={{ fontSize: "1.25rem" }}>{icon}</span>
+        </div>
         <span
-          style={{ 
-            fontSize: "10px", 
-            letterSpacing: "0.1em", 
-            textTransform: "uppercase", 
-            padding: "4px 10px", 
-            borderRadius: "9999px", 
-            fontWeight: 500,
-            background: "rgba(212,175,55,0.08)", 
-            color: "#D4AF37", 
-            fontFamily: "'Poppins', sans-serif" 
+          style={{
+            fontSize: "10px",
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            padding: "4px 10px",
+            borderRadius: "9999px",
+            fontWeight: 600,
+            background: "rgba(212,175,55,0.1)",
+            color: "#A8881E",
+            fontFamily: "'Poppins', sans-serif",
           }}
         >
           Live
         </span>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        <p style={{ fontSize: "2.5rem", fontWeight: 400, color: "#3A2E2A", lineHeight: 1, fontFamily: "'Cormorant Garamond', serif" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
+        <p style={{ fontSize: "clamp(1.7rem, 3vw, 2.25rem)", fontWeight: 600, color: "#3A2E2A", lineHeight: 1, fontFamily: "'Cormorant Garamond', serif" }}>
           {value}
         </p>
-        <p style={{ fontSize: "0.875rem", color: "#8A7D78", fontFamily: "'Poppins', sans-serif", fontWeight: 300, marginTop: "0.5rem" }}>
+        <p style={{ fontSize: "0.9rem", color: "#7D6F68", fontFamily: "'Poppins', sans-serif", fontWeight: 500 }}>
           {label}
         </p>
         {sublabel && (
-          <p style={{ fontSize: "11px", letterSpacing: "0.025em", color: "#D4AF37", fontFamily: "'Poppins', sans-serif", marginTop: "0.25rem" }}>
+          <p style={{ fontSize: "0.78rem", letterSpacing: "0.025em", color: "#A8881E", fontFamily: "'Poppins', sans-serif", fontWeight: 600 }}>
             {sublabel}
           </p>
         )}
