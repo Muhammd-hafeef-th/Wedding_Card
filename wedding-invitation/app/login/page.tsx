@@ -1,6 +1,6 @@
 "use client";
 // app/(admin)/login/page.tsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -11,6 +11,11 @@ export default function LoginPage() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,49 +38,47 @@ export default function LoginPage() {
 
   const inputStyle: React.CSSProperties = {
     width: "100%",
-    background: "rgba(255,255,255,0.9)",
-    border: "1px solid rgba(212,175,55,0.2)",
+    background: "#FAFAF8",
+    border: "1px solid rgba(212,175,55,0.3)",
     borderRadius: "12px",
     padding: "0.875rem 1.25rem",
     fontFamily: "'Poppins', sans-serif",
     fontSize: "0.9rem",
     color: "#3A2E2A",
     outline: "none",
-    transition: "border-color 0.3s",
+    transition: "all 0.3s ease",
   };
 
   return (
     <div
       className="min-h-screen flex items-center justify-center relative overflow-hidden"
-      style={{
-        background: "linear-gradient(135deg, #3A2E2A 0%, #2a1f1a 60%, #3A2E2A 100%)",
-      }}
+      style={{ background: "#FAFAF8" }}
     >
       {/* Background glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(circle at 30% 50%, rgba(212,175,55,0.1) 0%, transparent 50%),
-                            radial-gradient(circle at 70% 50%, rgba(207,161,141,0.08) 0%, transparent 50%)`,
+          backgroundImage: `radial-gradient(circle at 10% 20%, rgba(212,175,55,0.08) 0%, transparent 40%),
+                            radial-gradient(circle at 90% 80%, rgba(212,175,55,0.08) 0%, transparent 40%)`,
         }}
       />
 
       {/* Floating particles hint */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(12)].map((_, i) => (
+        {mounted && [...Array(12)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute rounded-full"
             style={{
               width: Math.random() * 4 + 2,
               height: Math.random() * 4 + 2,
-              background: "rgba(212,175,55,0.3)",
+              background: "rgba(212,175,55,0.4)",
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
             animate={{
               y: [-20, 20, -20],
-              opacity: [0.2, 0.6, 0.2],
+              opacity: [0.1, 0.5, 0.1],
             }}
             transition={{
               duration: Math.random() * 4 + 3,
@@ -88,48 +91,60 @@ export default function LoginPage() {
 
       {/* Login card */}
       <motion.div
-        className="relative z-10 w-full max-w-md mx-4"
-        initial={{ opacity: 0, y: 40, scale: 0.95 }}
+        className="relative z-10 w-full max-w-lg mx-4"
+        initial={{ opacity: 0, y: 30, scale: 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         <div
-          className="p-10 rounded-3xl flex flex-col gap-8"
+          className="flex flex-col rounded-[2rem]"
           style={{
-            background: "rgba(255,248,241,0.08)",
-            backdropFilter: "blur(30px)",
-            border: "1px solid rgba(212,175,55,0.25)",
-            boxShadow: "0 20px 60px rgba(0,0,0,0.3)",
+            padding: "clamp(2rem, 8vw, 4rem)", // Responsive padding: 32px on small, up to 64px on large
+            gap: "2.5rem",
+            background: "#FFFFFF",
+            border: "1px solid rgba(212,175,55,0.2)",
+            boxShadow: "0 25px 50px -12px rgba(212,175,55,0.15), 0 0 0 1px rgba(255,255,255,0.5) inset",
           }}
         >
           {/* Header */}
-          <div className="text-center flex flex-col gap-3">
+          <div className="text-center flex flex-col gap-5">
             <div
-              className="w-16 h-16 rounded-full flex items-center justify-center mx-auto"
-              style={{ background: "rgba(212,175,55,0.15)", border: "1px solid rgba(212,175,55,0.3)" }}
+              style={{
+                width: "5rem",
+                height: "5rem",
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 auto 0.5rem auto",
+                background: "rgba(212,175,55,0.05)",
+                border: "1px solid rgba(212,175,55,0.3)"
+              }}
             >
-              <span className="text-2xl font-heading" style={{ color: "#D4AF37" }}>W</span>
+              <span className="text-3xl font-heading" style={{ color: "var(--gold)" }}>W</span>
             </div>
-            <h1
-              className="font-heading"
-              style={{ fontSize: "2rem", fontWeight: 400, color: "#FFF8F1", letterSpacing: "0.05em" }}
-            >
-              Admin Panel
-            </h1>
-            <p
-              className="font-body text-sm"
-              style={{ color: "rgba(255,248,241,0.5)", fontWeight: 300 }}
-            >
-              Sign in to manage your wedding invitation
-            </p>
+            <div>
+              <h1
+                className="font-heading"
+                style={{ fontSize: "2rem", fontWeight: 400, color: "#3A2E2A", letterSpacing: "0.02em" }}
+              >
+                Admin Panel
+              </h1>
+              <p
+                className="font-body text-sm mt-1"
+                style={{ color: "#8A7D78", fontWeight: 300 }}
+              >
+                Sign in to manage your wedding invitation
+              </p>
+            </div>
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <label
-                className="text-xs tracking-widest uppercase"
-                style={{ color: "#D4AF37", fontFamily: "'Poppins', sans-serif" }}
+                className="text-[11px] tracking-[0.15em] uppercase font-medium"
+                style={{ color: "#3A2E2A", fontFamily: "'Poppins', sans-serif" }}
               >
                 Email Address
               </label>
@@ -139,21 +154,24 @@ export default function LoginPage() {
                 value={form.email}
                 onChange={(e) => setForm({ ...form, email: e.target.value })}
                 placeholder="admin@wedding.com"
-                style={{
-                  ...inputStyle,
-                  background: "rgba(255,255,255,0.07)",
-                  border: "1px solid rgba(212,175,55,0.25)",
-                  color: "#FFF8F1",
+                style={inputStyle}
+                onFocus={(e) => {
+                  e.target.style.borderColor = "var(--gold)";
+                  e.target.style.background = "#FFFFFF";
+                  e.target.style.boxShadow = "0 0 0 4px rgba(212,175,55,0.1)";
                 }}
-                onFocus={(e) => (e.target.style.borderColor = "rgba(212,175,55,0.6)")}
-                onBlur={(e) => (e.target.style.borderColor = "rgba(212,175,55,0.25)")}
+                onBlur={(e) => {
+                  e.target.style.borderColor = "rgba(212,175,55,0.3)";
+                  e.target.style.background = "#FAFAF8";
+                  e.target.style.boxShadow = "none";
+                }}
               />
             </div>
 
             <div className="flex flex-col gap-2">
               <label
-                className="text-xs tracking-widest uppercase"
-                style={{ color: "#D4AF37", fontFamily: "'Poppins', sans-serif" }}
+                className="text-[11px] tracking-[0.15em] uppercase font-medium"
+                style={{ color: "#3A2E2A", fontFamily: "'Poppins', sans-serif" }}
               >
                 Password
               </label>
@@ -163,25 +181,28 @@ export default function LoginPage() {
                 value={form.password}
                 onChange={(e) => setForm({ ...form, password: e.target.value })}
                 placeholder="••••••••"
-                style={{
-                  ...inputStyle,
-                  background: "rgba(255,255,255,0.07)",
-                  border: "1px solid rgba(212,175,55,0.25)",
-                  color: "#FFF8F1",
+                style={inputStyle}
+                onFocus={(e) => {
+                  e.target.style.borderColor = "var(--gold)";
+                  e.target.style.background = "#FFFFFF";
+                  e.target.style.boxShadow = "0 0 0 4px rgba(212,175,55,0.1)";
                 }}
-                onFocus={(e) => (e.target.style.borderColor = "rgba(212,175,55,0.6)")}
-                onBlur={(e) => (e.target.style.borderColor = "rgba(212,175,55,0.25)")}
+                onBlur={(e) => {
+                  e.target.style.borderColor = "rgba(212,175,55,0.3)";
+                  e.target.style.background = "#FAFAF8";
+                  e.target.style.boxShadow = "none";
+                }}
               />
             </div>
 
             {error && (
               <motion.p
-                className="text-sm text-center py-2 px-4 rounded-lg"
+                className="text-sm text-center py-3 px-4 rounded-xl mt-1"
                 style={{
-                  background: "rgba(255,100,100,0.1)",
-                  color: "#FF6B6B",
+                  background: "rgba(239, 68, 68, 0.05)",
+                  color: "#EF4444",
                   fontFamily: "'Poppins', sans-serif",
-                  border: "1px solid rgba(255,100,100,0.2)",
+                  border: "1px solid rgba(239, 68, 68, 0.2)",
                 }}
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -195,12 +216,6 @@ export default function LoginPage() {
             </GoldButton>
           </form>
 
-          <p
-            className="text-center text-xs"
-            style={{ color: "rgba(255,248,241,0.3)", fontFamily: "'Poppins', sans-serif" }}
-          >
-            Default: admin@wedding.com / Admin@12345
-          </p>
         </div>
       </motion.div>
     </div>

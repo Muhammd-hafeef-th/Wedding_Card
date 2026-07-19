@@ -17,6 +17,10 @@ const GuestWishSchema = new Schema<IGuestWish>(
   { timestamps: true }
 );
 
+if (process.env.NODE_ENV === "development" && mongoose.models.GuestWish) {
+  delete mongoose.models.GuestWish;
+}
+
 const GuestWish: Model<IGuestWish> =
   mongoose.models.GuestWish ||
   mongoose.model<IGuestWish>("GuestWish", GuestWishSchema);

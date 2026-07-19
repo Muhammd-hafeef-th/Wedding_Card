@@ -25,6 +25,10 @@ export interface IWedding extends Document {
   groomOccupation?: string;
   brideBio?: string;
   groomBio?: string;
+  bridePaternalGrandparents?: string;
+  brideMaternalGrandparents?: string;
+  groomPaternalGrandparents?: string;
+  groomMaternalGrandparents?: string;
 }
 
 const WeddingSchema = new Schema<IWedding>(
@@ -56,9 +60,17 @@ const WeddingSchema = new Schema<IWedding>(
     groomOccupation: { type: String, default: "" },
     brideBio: { type: String, default: "" },
     groomBio: { type: String, default: "" },
+    bridePaternalGrandparents: { type: String, default: "" },
+    brideMaternalGrandparents: { type: String, default: "" },
+    groomPaternalGrandparents: { type: String, default: "" },
+    groomMaternalGrandparents: { type: String, default: "" },
   },
   { timestamps: true }
 );
+
+if (process.env.NODE_ENV === "development" && mongoose.models.Wedding) {
+  delete mongoose.models.Wedding;
+}
 
 const Wedding: Model<IWedding> =
   mongoose.models.Wedding ||

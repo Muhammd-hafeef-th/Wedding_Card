@@ -67,7 +67,7 @@ export default function ImageUpload({ value, onChange, folder = "wedding", label
           className="relative w-full rounded-xl overflow-hidden"
           style={{ height: 160, border: "1px solid rgba(212,175,55,0.2)" }}
         >
-          <Image src={value} alt="Preview" fill className="object-cover" sizes="400px" />
+          <img src={value} alt="Preview" className="w-full h-full object-cover" />
           <button
             onClick={() => onChange("")}
             className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center text-xs cursor-pointer"

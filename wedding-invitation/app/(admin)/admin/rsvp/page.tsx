@@ -11,13 +11,22 @@ export default function RSVPPage() {
   const [rsvps, setRSVPs] = useState<RSVPEntry[]>([]);
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [filter, setFilter] = useState("");
   const [loading, setLoading] = useState(true);
+
+  // Debounce search input to prevent rapid api calls
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 400);
+    return () => clearTimeout(handler);
+  }, [search]);
 
   const fetchRSVPs = async () => {
     setLoading(true);
     const params = new URLSearchParams();
-    if (search) params.set("search", search);
+    if (debouncedSearch) params.set("search", debouncedSearch);
     if (filter) params.set("attendance", filter);
     const res = await fetch(`/api/rsvp?${params}`);
     const data = await res.json();
@@ -27,7 +36,7 @@ export default function RSVPPage() {
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { fetchRSVPs(); }, [search, filter]);
+  useEffect(() => { fetchRSVPs(); }, [debouncedSearch, filter]);
 
   const handleDelete = async (id: string) => {
     if (!confirm("Delete this RSVP?")) return;

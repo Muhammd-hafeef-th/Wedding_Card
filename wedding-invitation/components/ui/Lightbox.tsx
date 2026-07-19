@@ -92,12 +92,10 @@ export default function Lightbox({
             />
           ) : (
             <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
-              <Image
+              <img
                 src={current.url}
                 alt={current.caption || "Gallery image"}
-                fill
-                className="object-contain rounded-lg"
-                sizes="(max-width: 768px) 100vw, 80vw"
+                className="w-full h-full object-contain rounded-lg"
               />
             </div>
           )}

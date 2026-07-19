@@ -2,6 +2,7 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import AdminSidebar from "@/components/admin/AdminSidebar";
+import AdminRouteLoader from "@/components/admin/AdminRouteLoader";
 import { SessionProvider } from "next-auth/react";
 
 export const metadata = {
@@ -19,9 +20,14 @@ export default async function AdminLayout({ children }: { children: React.ReactN
 
   return (
     <SessionProvider session={session}>
-      <div className="flex min-h-screen" style={{ background: "#3B0918", fontFamily: "'Poppins', sans-serif" }}>
+      <AdminRouteLoader />
+      <div className="flex min-h-screen" style={{ background: "#FAFAF8", fontFamily: "'Poppins', sans-serif" }}>
         <AdminSidebar />
-        <main className="flex-1 min-h-screen overflow-x-hidden pb-24" style={{ marginLeft: "256px" }}>
+        <style>{`
+          .admin-content-area { margin-left: 0; width: 100%; padding-top: 4rem; }
+          @media (min-width: 768px) { .admin-content-area { margin-left: 256px; width: calc(100% - 256px); padding-top: 0; } }
+        `}</style>
+        <main className="flex-1 min-h-screen overflow-x-hidden pb-24 admin-content-area">
           {children}
         </main>
       </div>

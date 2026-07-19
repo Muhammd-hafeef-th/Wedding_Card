@@ -8,19 +8,39 @@ interface FooterSectionProps {
 }
 
 export default function FooterSection({ wedding }: FooterSectionProps) {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const handleShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: `${wedding.brideFirstName} & ${wedding.groomFirstName}'s Wedding`,
+          text: `Join us in celebrating the wedding of ${wedding.brideFirstName} and ${wedding.groomFirstName}!`,
+          url: window.location.origin,
+        });
+      } else {
+        // Fallback: Copy link to clipboard
+        await navigator.clipboard.writeText(window.location.origin);
+        alert("Invitation link copied to clipboard!");
+      }
+    } catch (e) {
+      console.error("Share failed:", e);
+    }
   };
+
+  const dateObj = wedding.date ? new Date(wedding.date) : new Date("2026-07-19");
+  const day = dateObj.getDate() || 19;
+  const month = dateObj.toLocaleDateString("en-US", { month: "long" }).toUpperCase() || "JULY";
+  const year = dateObj.getFullYear() || 2026;
+  const mainPlace = wedding.venue ? wedding.venue.split(",").pop()?.trim().toUpperCase() : "IRIKKUR";
 
   return (
     <footer
-      className="relative py-20 overflow-hidden"
-      style={{ background: "var(--bg-main)" }}
+      className="relative overflow-hidden"
+      style={{ background: "transparent", paddingTop: "5.5rem", paddingBottom: "3.5rem" }}
     >
       {/* Top gold line */}
       <div
         className="absolute top-0 left-0 right-0 h-0.5"
-        style={{ background: "var(--gold-gradient)" }}
+        style={{ background: "var(--gold-gradient)", opacity: 0.15 }}
       />
 
       {/* Decorative background */}
@@ -31,123 +51,143 @@ export default function FooterSection({ wedding }: FooterSectionProps) {
         }}
       />
 
-      <div className="container-luxury relative z-10 flex flex-col items-center gap-8 text-center">
-        {/* Monogram */}
+      <div className="container-luxury relative z-10 flex flex-col items-center text-center">
+
+        {/* Arabic Calligraphy */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <div
-            className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4"
+          <h3
+            className="font-heading text-3xl md:text-4xl"
             style={{
-              background: "rgba(212,175,55,0.1)",
-              border: "1px solid rgba(212,175,55,0.3)",
+              color: "var(--gold)",
+              fontFamily: "'Amiri', serif",
+              fontWeight: 400,
+              letterSpacing: "normal",
             }}
           >
-            <span className="font-heading text-2xl" style={{ color: "var(--gold)" }}>
-              {wedding.groomFirstName?.[0]}{wedding.brideFirstName?.[0]}
-            </span>
-          </div>
+            بَارَكَ اللَّهُ لَكُمَا
+          </h3>
         </motion.div>
+
+        {/* With Love, & Family Houses */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="mt-3 flex flex-col items-center"
+        >
+          <p
+            className="font-heading italic text-sm"
+            style={{ color: "var(--text-muted)", opacity: 0.8 }}
+          >
+            With Love,
+          </p>
+          <p
+            className="font-body text-[10px] md:text-xs tracking-wider mt-1 opacity-70"
+            style={{ color: "var(--text-main)" }}
+          >
+            Mangalathel House, Maranchery &bull; Oravampurth House, Melattur
+          </p>
+        </motion.div>
+
+        {/* Divider line */}
+        <div style={{ width: "120px", height: "1px", background: "var(--gold-gradient)", opacity: 0.25, margin: "2rem 0" }} />
 
         {/* Couple names */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
           <h2
-            className="font-heading"
-            style={{
-              fontSize: "clamp(1.8rem, 4vw, 2.8rem)",
-              fontWeight: 300,
-              color: "var(--bg-main)",
-              letterSpacing: "0.05em",
-            }}
-          >
-            {wedding.groomFirstName} &amp; {wedding.brideFirstName}
-          </h2>
-          <p
-            className="font-heading italic mt-1"
-            style={{ color: "var(--gold)", fontSize: "1.1rem", fontWeight: 300 }}
-          >
-            Forever Begins
-          </p>
-        </motion.div>
-
-        {/* Thank you */}
-        <motion.div
-          className="max-w-lg"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.4 }}
-        >
-          <div className="flex items-center gap-3 justify-center mb-4">
-            <div style={{ flex: 1, height: 1, background: "rgba(212,175,55,0.3)" }} />
-            <span style={{ color: "rgba(212,175,55,0.5)", fontSize: "0.6rem" }}>✦</span>
-            <div style={{ flex: 1, height: 1, background: "rgba(212,175,55,0.3)" }} />
-          </div>
-
-          <p
             className="font-heading italic"
             style={{
-              fontSize: "1.1rem",
+              fontSize: "clamp(2rem, 4vw, 2.75rem)",
               fontWeight: 300,
-              color: "rgba(255,248,241,0.6)",
-              lineHeight: 1.8,
+              color: "var(--text-main)",
             }}
           >
-            Thank you for being a part of our most beautiful day. Your presence means the world to us.
-          </p>
+            {wedding.brideFirstName} &amp; {wedding.groomFirstName}
+          </h2>
         </motion.div>
 
-        {/* Date */}
+        {/* Date and Location strip */}
         <motion.p
-          className="font-body text-xs tracking-[0.35em] uppercase"
-          style={{ color: "rgba(212,175,55,0.5)" }}
+          className="font-body text-[9px] tracking-[0.25em] uppercase"
+          style={{ color: "var(--gold-light)", opacity: 0.7, marginTop: "1.25rem" }}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
         >
-          {new Date(wedding.date).toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          })} · {wedding.venue}
+          {day} &bull; {month} &bull; {year} &bull; WEDDING &bull; {mainPlace}
         </motion.p>
 
-        {/* Scroll to top */}
-        <motion.button
-          onClick={scrollToTop}
-          className="w-10 h-10 rounded-full flex items-center justify-center cursor-pointer mt-4"
-          style={{
-            background: "rgba(212,175,55,0.15)",
-            border: "1px solid rgba(212,175,55,0.3)",
-            color: "var(--gold)",
-          }}
-          whileHover={{ scale: 1.1, background: "rgba(212,175,55,0.25)" }}
-          whileTap={{ scale: 0.95 }}
+        {/* Action Links Row (Share & Admin) */}
+        <motion.div
+          className="flex items-center gap-4 justify-center"
+          style={{ marginTop: "2.5rem" }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
         >
-          ↑
-        </motion.button>
+          <button 
+            onClick={handleShare} 
+            className="footer-btn"
+          >
+            Share Invitation
+          </button>
+          <a 
+            href="/admin" 
+            className="footer-btn"
+          >
+            Admin Panel
+          </a>
+        </motion.div>
 
-        {/* Copyright */}
-        <p
-          className="font-body text-xs"
-          style={{ color: "rgba(255,248,241,0.2)" }}
+        {/* Divider Line */}
+        <div style={{ width: "30px", height: "1px", background: "rgba(212, 175, 55, 0.15)", margin: "1.5rem 0" }} />
+
+        {/* Signature & Copyright Block */}
+        <motion.div
+          className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 justify-center font-body text-[9px] tracking-widest uppercase"
+          style={{ color: "rgba(255,248,241,0.25)" }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.5 }}
         >
-          © {new Date().getFullYear()} {wedding.groomFirstName} &amp; {wedding.brideFirstName}. Made with ♡
-        </p>
+          <span>© {new Date().getFullYear()} All Rights Reserved</span>
+          <span className="hidden sm:inline opacity-30">•</span>
+          <span>
+            Developed by{" "}
+            <a
+              href="https://reqoir.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-100 transition-opacity"
+              style={{
+                color: "var(--gold-light)",
+                textDecoration: "none",
+                borderBottom: "1px solid rgba(212, 175, 55, 0.25)",
+                paddingBottom: "1px",
+              }}
+            >
+              reqoir
+            </a>
+          </span>
+        </motion.div>
+
       </div>
     </footer>
   );
 }
-
-
 
 

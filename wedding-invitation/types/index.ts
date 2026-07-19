@@ -26,6 +26,10 @@ export interface WeddingData {
   groomOccupation?: string;
   brideBio?: string;
   groomBio?: string;
+  bridePaternalGrandparents?: string;
+  brideMaternalGrandparents?: string;
+  groomPaternalGrandparents?: string;
+  groomMaternalGrandparents?: string;
   updatedAt?: string;
 }
 

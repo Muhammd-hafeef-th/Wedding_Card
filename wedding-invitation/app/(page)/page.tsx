@@ -4,11 +4,14 @@ import { useState, useEffect } from "react";
 import OpeningScreen from "@/components/sections/OpeningScreen";
 import HeroSection from "@/components/sections/HeroSection";
 import Gallery from "@/components/sections/Gallery";
+import ItinerarySection from "@/components/sections/ItinerarySection";
 import VenueSection from "@/components/sections/VenueSection";
+import FamilySection from "@/components/sections/FamilySection";
 import CountdownSection from "@/components/sections/CountdownSection";
 import RSVPSection from "@/components/sections/RSVPSection";
 import WishesSection from "@/components/sections/WishesSection";
 import FooterSection from "@/components/sections/FooterSection";
+import BackgroundEffects from "@/components/ui/BackgroundEffects";
 import { WeddingData, GalleryItem, VenueData } from "@/types";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -24,6 +27,10 @@ const DEFAULT_WEDDING: WeddingData = {
   venue: "The Grand Palace, New Delhi",
   subtitle: "Two souls, one destiny",
   invitationText: "Together with their families, we joyfully invite you to celebrate the union of",
+  bridePaternalGrandparents: "Mangalathel Moidutty & Hafsa Naranath",
+  brideMaternalGrandparents: "MT Seethi Master & Ayshakutty",
+  groomPaternalGrandparents: "Late Veeran Kurikkal & Late Kunjathutty Hajjuma",
+  groomMaternalGrandparents: "Late Hamza Haji MC & Late Ummaathutti Hajjuma",
 };
 
 const DEFAULT_VENUE: VenueData = {
@@ -99,12 +106,16 @@ export default function InvitationPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
+            className="relative z-0"
           >
+            <BackgroundEffects />
             <HeroSection wedding={wedding} />
-            <Gallery items={gallery} />
-            <VenueSection venue={venue} />
+            {gallery.length > 0 && <Gallery items={gallery} />}
+            <ItinerarySection wedding={wedding} venue={venue} />
             <CountdownSection wedding={wedding} />
             <RSVPSection />
+            <VenueSection venue={venue} />
+            <FamilySection wedding={wedding} />
             <WishesSection />
             <FooterSection wedding={wedding} />
           </motion.div>

@@ -104,6 +104,8 @@ export default function WeddingDetailsPage() {
             {field("groomLastName", "Last Name")}
             {field("groomFatherName", "Father's Name")}
             {field("groomMotherName", "Mother's Name")}
+            {field("groomPaternalGrandparents", "Paternal Grandparents")}
+            {field("groomMaternalGrandparents", "Maternal Grandparents")}
             {field("groomOccupation", "Occupation")}
             <div className="flex flex-col gap-1">
               <label style={labelStyle}>Biography</label>
@@ -125,6 +127,8 @@ export default function WeddingDetailsPage() {
             {field("brideLastName", "Last Name")}
             {field("brideFatherName", "Father's Name")}
             {field("brideMotherName", "Mother's Name")}
+            {field("bridePaternalGrandparents", "Paternal Grandparents")}
+            {field("brideMaternalGrandparents", "Maternal Grandparents")}
             {field("brideOccupation", "Occupation")}
             <div className="flex flex-col gap-1">
               <label style={labelStyle}>Biography</label>

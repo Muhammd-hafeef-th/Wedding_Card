@@ -47,7 +47,7 @@ export default function ContactSection() {
     <section
       id="contact"
       className="section-padding"
-      style={{ background: "var(--bg-main)" }}
+      style={{ background: "transparent" }}
     >
       <div className="container-luxury">
         <div className="mb-16">

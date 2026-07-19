@@ -18,8 +18,10 @@ export async function GET(request: Request) {
     if (search) query.guestName = { $regex: search, $options: "i" };
     if (filter) query.attendance = filter;
 
-    const rsvps = await RSVP.find(query).sort({ createdAt: -1 });
-    const total = await RSVP.countDocuments({});
+    const [rsvps, total] = await Promise.all([
+      RSVP.find(query).sort({ createdAt: -1 }),
+      RSVP.countDocuments({}),
+    ]);
     return NextResponse.json({ rsvps, total });
   } catch (error) {
     console.error("GET /api/rsvp error:", error);

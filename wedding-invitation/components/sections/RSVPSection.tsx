@@ -2,7 +2,6 @@
 // components/sections/RSVPSection.tsx
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import SectionTitle from "@/components/ui/SectionTitle";
 import GoldButton from "@/components/ui/GoldButton";
 
 export default function RSVPSection() {
@@ -37,204 +36,159 @@ export default function RSVPSection() {
     }
   };
 
-  const inputStyle = {
-    width: "100%",
-    background: "transparent",
-    border: "1px solid rgba(212,175,55,0.25)",
-    borderRadius: "12px",
-    padding: "0.875rem 1.25rem",
-    fontFamily: "'Poppins', sans-serif",
-    fontSize: "0.875rem",
-    color: "var(--text-main)",
-    outline: "none",
-    transition: "border-color 0.3s ease, box-shadow 0.3s ease",
-  };
-
   return (
-    <section
-      id="rsvp"
-      className="section-padding"
-      style={{ background: "var(--bg-main)" }}
-    >
-      <div className="container-luxury">
-        <div className="mb-16">
-          <SectionTitle
-            eyebrow="RSVP"
-            title="Will You Join Us?"
-            subtitle="Please let us know if you'll be celebrating with us. We'd love to make sure we have a seat saved just for you."
-          />
-        </div>
-
-        <div className="max-w-2xl mx-auto">
+    <section id="rsvp" className="section-padding relative">
+      <div className="container-luxury relative z-10">
+        
+        {/* Custom Centered Wrapper */}
+        <div className="rsvp-wrapper">
           <AnimatePresence mode="wait">
             {status === "success" ? (
               <motion.div
                 key="success"
-                className="flex flex-col items-center gap-6 py-16 text-center"
-                initial={{ opacity: 0, scale: 0.9 }}
+                className="rsvp-card"
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <motion.div
-                  className="w-20 h-20 rounded-full flex items-center justify-center text-3xl"
-                  style={{ background: "var(--gold-gradient)", boxShadow: "var(--shadow-gold)" }}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", duration: 0.6 }}
-                >
-                  ✓
-                </motion.div>
-                <h3 className="font-heading" style={{ fontSize: "2rem", fontWeight: 400, color: "var(--text-main)" }}>
-                  Thank You!
-                </h3>
-                <p className="font-body text-sm" style={{ color: "var(--text-muted)", fontWeight: 300 }}>
-                  Your response has been received. We can&apos;t wait to celebrate with you!
-                </p>
-                <GoldButton onClick={() => setStatus("idle")} variant="outline">
-                  Submit Another
-                </GoldButton>
+                {/* Top Gold Bar */}
+                <div className="rsvp-top-bar">
+                  <span className="rsvp-top-bar-text">✦ RSVP ✦</span>
+                </div>
+
+                <div className="rsvp-content flex flex-col items-center gap-6 text-center">
+                  <motion.div
+                    className="w-16 h-16 rounded-full flex items-center justify-center text-2xl"
+                    style={{ background: "var(--gold-gradient)", color: "#1a1515" }}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", duration: 0.6 }}
+                  >
+                    ✓
+                  </motion.div>
+                  <h3 className="rsvp-title" style={{ marginBottom: "0.5rem" }}>
+                    Thank You!
+                  </h3>
+                  <p className="font-body text-xs md:text-sm opacity-80" style={{ color: "var(--text-main)", fontWeight: 300, lineHeight: 1.6 }}>
+                    Your response has been received. We can&apos;t wait to celebrate with you!
+                  </p>
+                  <GoldButton onClick={() => setStatus("idle")} variant="outline" size="sm" className="mt-4">
+                    Submit Another
+                  </GoldButton>
+                </div>
               </motion.div>
             ) : (
               <motion.form
                 key="form"
                 onSubmit={handleSubmit}
-                className="flex flex-col gap-5 p-8 md:p-12 rounded-3xl"
-                style={{
-                  background: "transparent",
-                  border: "1px solid rgba(212,175,55,0.15)",
-                  backdropFilter: "blur(20px)",
-                  boxShadow: "0 0 0 1px var(--gold)",
-                }}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
+                className="rsvp-card"
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
-                {/* Name */}
-                <div className="flex flex-col gap-2">
-                  <label className="font-body text-xs tracking-widest uppercase" style={{ color: "var(--gold)" }}>
-                    Your Name *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={form.guestName}
-                    onChange={(e) => setForm({ ...form, guestName: e.target.value })}
-                    placeholder="Enter your full name"
-                    style={inputStyle}
-                    onFocus={(e) => { e.target.style.borderColor = "rgba(212,175,55,0.6)"; e.target.style.boxShadow = "0 0 0 3px rgba(212,175,55,0.1)"; }}
-                    onBlur={(e) => { e.target.style.borderColor = "rgba(212,175,55,0.25)"; e.target.style.boxShadow = "none"; }}
-                  />
+                {/* Top Gold Bar */}
+                <div className="rsvp-top-bar">
+                  <span className="rsvp-top-bar-text">✦ RSVP ✦</span>
                 </div>
 
-                {/* Phone */}
-                <div className="flex flex-col gap-2">
-                  <label className="font-body text-xs tracking-widest uppercase" style={{ color: "var(--gold)" }}>
-                    Phone Number *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={form.phone}
-                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    placeholder="+91 00000 00000"
-                    style={inputStyle}
-                    onFocus={(e) => { e.target.style.borderColor = "rgba(212,175,55,0.6)"; e.target.style.boxShadow = "0 0 0 3px rgba(212,175,55,0.1)"; }}
-                    onBlur={(e) => { e.target.style.borderColor = "rgba(212,175,55,0.25)"; e.target.style.boxShadow = "none"; }}
-                  />
-                </div>
-
-                {/* Attendance */}
-                <div className="flex flex-col gap-3">
-                  <label className="font-body text-xs tracking-widest uppercase" style={{ color: "var(--gold)" }}>
-                    Will you attend? *
-                  </label>
-                  <div className="flex gap-3 flex-wrap">
-                    {[
-                      { value: "yes", label: "Joyfully Accept", icon: "🎉" },
-                      { value: "no", label: "Regretfully Decline", icon: "💔" },
-                      { value: "maybe", label: "Maybe", icon: "🤔" },
-                    ].map((option) => (
-                      <label
-                        key={option.value}
-                        className="flex items-center gap-2 px-4 py-2.5 rounded-full cursor-pointer transition-all duration-200"
-                        style={{
-                          background: form.attendance === option.value ? "var(--gold-gradient)" : "var(--bg-card)",
-                          border: `1px solid ${form.attendance === option.value ? "transparent" : "rgba(212,175,55,0.25)"}`,
-                          color: form.attendance === option.value ? "var(--text-main)" : "var(--text-muted)",
-                          fontSize: "0.8rem",
-                          fontFamily: "'Poppins', sans-serif",
-                        }}
-                      >
-                        <input
-                          type="radio"
-                          name="attendance"
-                          value={option.value}
-                          checked={form.attendance === option.value}
-                          onChange={(e) => setForm({ ...form, attendance: e.target.value })}
-                          className="hidden"
-                        />
-                        <span>{option.icon}</span>
-                        {option.label}
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Guest Count */}
-                <div className="flex flex-col gap-2">
-                  <label className="font-body text-xs tracking-widest uppercase" style={{ color: "var(--gold)" }}>
-                    Number of Guests
-                  </label>
-                  <input
-                    type="number"
-                    min={1}
-                    max={10}
-                    value={form.guestCount}
-                    onChange={(e) => setForm({ ...form, guestCount: parseInt(e.target.value) || 1 })}
-                    style={{ ...inputStyle, maxWidth: "120px" }}
-                    onFocus={(e) => { e.target.style.borderColor = "rgba(212,175,55,0.6)"; e.target.style.boxShadow = "0 0 0 3px rgba(212,175,55,0.1)"; }}
-                    onBlur={(e) => { e.target.style.borderColor = "rgba(212,175,55,0.25)"; e.target.style.boxShadow = "none"; }}
-                  />
-                </div>
-
-                {/* Message */}
-                <div className="flex flex-col gap-2">
-                  <label className="font-body text-xs tracking-widest uppercase" style={{ color: "var(--gold)" }}>
-                    Message (optional)
-                  </label>
-                  <textarea
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    placeholder="Write a personal message for the couple..."
-                    rows={3}
-                    style={{ ...inputStyle, resize: "vertical" }}
-                    onFocus={(e) => { e.target.style.borderColor = "rgba(212,175,55,0.6)"; e.target.style.boxShadow = "0 0 0 3px rgba(212,175,55,0.1)"; }}
-                    onBlur={(e) => { e.target.style.borderColor = "rgba(212,175,55,0.25)"; e.target.style.boxShadow = "none"; }}
-                  />
-                </div>
-
-                {status === "error" && (
-                  <p className="font-body text-sm text-red-500 text-center">
-                    Something went wrong. Please try again.
+                {/* Content Area */}
+                <div className="rsvp-content">
+                  
+                  {/* Inside Heading */}
+                  <h3 className="rsvp-title">
+                    Will You Join Us?
+                  </h3>
+                  <p className="rsvp-subtitle">
+                    Please let us know if you&apos;ll be celebrating with us. We want to ensure we have a place reserved just for you.
                   </p>
-                )}
 
-                <div className="flex justify-center mt-2">
-                  <GoldButton type="submit" disabled={status === "loading"} size="lg">
-                    {status === "loading" ? "Submitting..." : "Send RSVP →"}
-                  </GoldButton>
+                  {/* Name Input */}
+                  <div className="rsvp-form-group">
+                    <label className="rsvp-label">
+                      Your Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={form.guestName}
+                      onChange={(e) => setForm({ ...form, guestName: e.target.value })}
+                      placeholder="Enter your full name"
+                      className="rsvp-input"
+                    />
+                  </div>
+
+                  {/* Attendance Selector */}
+                  <div className="rsvp-form-group" style={{ marginBottom: "1.75rem" }}>
+                    <label className="rsvp-label">
+                      Will you attend? *
+                    </label>
+                    <div className="rsvp-radio-group">
+                      {[
+                        { value: "yes", label: "Joyfully Accept", icon: "🎉" },
+                        { value: "no", label: "Regretfully Decline", icon: "💔" },
+                      ].map((option) => (
+                        <label
+                          key={option.value}
+                          className={`rsvp-radio-label ${form.attendance === option.value ? "active" : ""}`}
+                        >
+                          <input
+                            type="radio"
+                            name="attendance"
+                            value={option.value}
+                            checked={form.attendance === option.value}
+                            onChange={(e) => setForm({ ...form, attendance: e.target.value })}
+                            style={{ display: "none" }}
+                          />
+                          <span>{option.icon}</span>
+                          {option.label}
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Guest Count Input */}
+                  <div className="rsvp-form-group">
+                    <label className="rsvp-label">
+                      Number of Guests
+                    </label>
+                    <input
+                      type="number"
+                      min={1}
+                      max={10}
+                      value={form.guestCount}
+                      onChange={(e) => setForm({ ...form, guestCount: parseInt(e.target.value) || 1 })}
+                      className="rsvp-input"
+                      style={{ maxWidth: "100px" }}
+                    />
+                  </div>
+
+                  {status === "error" && (
+                    <p className="font-body text-xs text-red-500 text-center mt-4">
+                      Something went wrong. Please try again.
+                    </p>
+                  )}
+
+                  {/* Submit Button */}
+                  <div className="rsvp-submit-btn-wrapper">
+                    <GoldButton 
+                      type="submit" 
+                      disabled={status === "loading"} 
+                      size="md" 
+                      className="w-full flex items-center justify-center py-3.5"
+                    >
+                      {status === "loading" ? "Submitting..." : "Send RSVP"}
+                    </GoldButton>
+                  </div>
+
                 </div>
               </motion.form>
             )}
           </AnimatePresence>
         </div>
+
       </div>
     </section>
   );
 }
-
-
-
-
-

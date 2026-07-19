@@ -76,7 +76,7 @@ export default function GalleryAdminPage() {
             {item.type === "video" ? (
               <video src={item.url} className="w-full h-full object-cover" />
             ) : (
-              <Image src={item.url} alt={item.caption || ""} fill className="object-cover" sizes="300px" />
+              <img src={item.url} alt={item.caption || ""} className="w-full h-full object-cover" />
             )}
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 opacity-0 group-hover:opacity-100 transition-all" style={{ background: "rgba(58,46,42,0.75)" }}>
               {item.caption && <p className="text-xs text-center px-2" style={{ color: "rgba(255,255,255,0.05)", fontFamily: "'Poppins', sans-serif" }}>{item.caption}</p>}

@@ -116,7 +116,7 @@ export default function BrideGroom({ wedding }: BrideGroomProps) {
       id="couple"
       className="section-padding"
       style={{
-        background: "var(--bg-main)",
+        background: "transparent",
       }}
     >
       <div className="container-luxury">

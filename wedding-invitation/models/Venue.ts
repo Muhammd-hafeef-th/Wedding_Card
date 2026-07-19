@@ -30,6 +30,10 @@ const VenueSchema = new Schema<IVenue>(
   { timestamps: true }
 );
 
+if (process.env.NODE_ENV === "development" && mongoose.models.Venue) {
+  delete mongoose.models.Venue;
+}
+
 const Venue: Model<IVenue> =
   mongoose.models.Venue || mongoose.model<IVenue>("Venue", VenueSchema);
 

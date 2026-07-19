@@ -20,6 +20,10 @@ const GallerySchema = new Schema<IGallery>(
   { timestamps: true }
 );
 
+if (process.env.NODE_ENV === "development" && mongoose.models.Gallery) {
+  delete mongoose.models.Gallery;
+}
+
 const Gallery: Model<IGallery> =
   mongoose.models.Gallery ||
   mongoose.model<IGallery>("Gallery", GallerySchema);

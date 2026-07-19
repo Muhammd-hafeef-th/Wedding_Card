@@ -26,6 +26,10 @@ const RSVPSchema = new Schema<IRSVP>(
   { timestamps: true }
 );
 
+if (process.env.NODE_ENV === "development" && mongoose.models.RSVP) {
+  delete mongoose.models.RSVP;
+}
+
 const RSVP: Model<IRSVP> =
   mongoose.models.RSVP || mongoose.model<IRSVP>("RSVP", RSVPSchema);
 

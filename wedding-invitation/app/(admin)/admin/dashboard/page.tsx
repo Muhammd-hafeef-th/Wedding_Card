@@ -76,27 +76,28 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="p-8 min-h-screen">
+    <div style={{ padding: "clamp(1.5rem, 4vw, 3rem)", minHeight: "100vh" }}>
       {/* Header */}
       <motion.div
-        className="mb-8"
+        style={{ marginBottom: "2.5rem", display: "flex", flexDirection: "column" }}
+        className="items-center sm:items-start text-center sm:text-left"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <p className="text-xs tracking-[0.3em] uppercase mb-1" style={{ color: "#D4AF37", fontFamily: "'Poppins', sans-serif" }}>
+        <p style={{ fontSize: "0.75rem", letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: "0.5rem", fontWeight: 500, color: "#D4AF37", fontFamily: "'Poppins', sans-serif" }}>
           Welcome back
         </p>
-        <h1 className="font-heading" style={{ fontSize: "2.5rem", fontWeight: 400, color: "#F9F6F0" }}>
+        <h1 className="font-heading" style={{ fontSize: "clamp(2.5rem, 5vw, 3.5rem)", fontWeight: 400, color: "#3A2E2A", lineHeight: 1.1 }}>
           Dashboard
         </h1>
-        <p className="text-sm mt-1" style={{ color: "rgba(249,246,240,0.6)", fontFamily: "'Poppins', sans-serif", fontWeight: 300 }}>
-          {stats.groomName} & {stats.brideName}&apos;s wedding management
+        <p className="text-sm sm:text-base mt-3" style={{ color: "#8A7D78", fontFamily: "'Poppins', sans-serif", fontWeight: 300 }}>
+          Manage {stats.groomName} & {stats.brideName}&apos;s wedding details
         </p>
       </motion.div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6 mb-8 lg:mb-12">
         <StatsCard
           icon="💍"
           label="Days Until Wedding"
@@ -115,48 +116,69 @@ export default function DashboardPage() {
         <StatsCard icon="🖼️" label="Gallery Items" value={stats.galleryCount} index={3} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8">
         {/* Countdown */}
         <motion.div
-          className="p-8 flex flex-col gap-4"
-          style={adminStyles.card}
+          className="flex flex-col rounded-[2rem]"
+          style={{
+            padding: "clamp(1.5rem, 5vw, 2.5rem)",
+            gap: "1.5rem",
+            background: "#FFFFFF",
+            border: "1px solid rgba(212,175,55,0.2)",
+            boxShadow: "0 15px 40px -15px rgba(212,175,55,0.1), 0 0 0 1px rgba(255,255,255,0.5) inset",
+          }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <h3 className="font-heading" style={{ fontSize: "1.25rem", fontWeight: 400, color: "#F9F6F0" }}>
-            Countdown to the Big Day
-          </h3>
-          <CountdownTimer date={stats.weddingDate} time={stats.weddingTime} size="sm" />
+          <div className="flex items-center gap-3 mb-2">
+            <span className="text-2xl">⏳</span>
+            <h3 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 400, color: "#3A2E2A" }}>
+              Countdown
+            </h3>
+          </div>
+          <CountdownTimer date={stats.weddingDate} time={stats.weddingTime} />
         </motion.div>
 
         {/* Quick Actions */}
         <motion.div
-          className="p-8 flex flex-col gap-4"
-          style={adminStyles.card}
+          className="flex flex-col rounded-[2rem]"
+          style={{
+            padding: "clamp(1.5rem, 5vw, 2.5rem)",
+            gap: "1.5rem",
+            background: "#FFFFFF",
+            border: "1px solid rgba(212,175,55,0.2)",
+            boxShadow: "0 15px 40px -15px rgba(212,175,55,0.1), 0 0 0 1px rgba(255,255,255,0.5) inset",
+          }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
         >
-          <h3 className="font-heading" style={{ fontSize: "1.25rem", fontWeight: 400, color: "#F9F6F0" }}>
-            Quick Actions
-          </h3>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="text-2xl">⚡</span>
+            <h3 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 400, color: "#3A2E2A" }}>
+              Quick Actions
+            </h3>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {quickActions.map((action) => (
               <Link
                 key={action.href}
                 href={action.href}
-                className="flex items-center gap-3 p-4 rounded-xl transition-all duration-200 group"
+                className="flex items-center gap-4 p-5 rounded-2xl transition-all duration-300 group hover:-translate-y-1"
                   style={{
-                  border: "1px solid rgba(212,175,55,0.15)",
-                  background: "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(212,175,55,0.2)",
+                  background: "#FAFAF8",
                   textDecoration: "none",
+                  boxShadow: "0 4px 12px rgba(212,175,55,0.05)",
                 }}
               >
-                <span className="text-xl">{action.icon}</span>
+                <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-sm" style={{ background: "#FFFFFF", border: "1px solid rgba(212,175,55,0.1)" }}>
+                  <span className="text-xl group-hover:scale-110 transition-transform duration-300">{action.icon}</span>
+                </div>
                 <span
-                  className="text-xs font-medium"
-                  style={{ color: "#F9F6F0", fontFamily: "'Poppins', sans-serif", lineHeight: 1.3 }}
+                  className="text-sm font-medium"
+                  style={{ color: "#3A2E2A", fontFamily: "'Poppins', sans-serif", lineHeight: 1.3 }}
                 >
                   {action.label}
                 </span>
@@ -165,26 +187,6 @@ export default function DashboardPage() {
           </div>
         </motion.div>
       </div>
-
-      {/* Seed note */}
-      <motion.div
-        className="mt-6 p-4 rounded-xl text-sm"
-        style={{
-          background: "rgba(212,175,55,0.05)",
-          border: "1px solid rgba(212,175,55,0.15)",
-          fontFamily: "'Poppins', sans-serif",
-          color: "rgba(249,246,240,0.6)",
-        }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-      >
-        💡 <strong>First time setup?</strong> Visit{" "}
-        <a href="/api/seed" target="_blank" className="underline" style={{ color: "#D4AF37" }}>
-          /api/seed
-        </a>{" "}
-        to populate sample data into your database.
-      </motion.div>
     </div>
   );
 }
