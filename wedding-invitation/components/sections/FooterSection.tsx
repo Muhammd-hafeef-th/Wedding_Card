@@ -138,14 +138,14 @@ export default function FooterSection({ wedding }: FooterSectionProps) {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <button 
-            onClick={handleShare} 
+          <button
+            onClick={handleShare}
             className="footer-btn"
           >
             Share Invitation
           </button>
-          <a 
-            href="/admin" 
+          <a
+            href="/admin/dashboard"
             className="footer-btn"
           >
             Admin Panel
