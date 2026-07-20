@@ -41,14 +41,12 @@ export default function WishesSection() {
     }
   };
 
-  // Initially show up to visibleCount wishes
   const displayedWishes = wishes.slice(0, visibleCount);
 
   return (
     <section id="wishes" className="section-padding relative">
       <div className="container-luxury relative z-10">
 
-        {/* Section Heading */}
         <div style={{ marginBottom: "4.5rem" }}>
           <SectionTitle
             eyebrow="Blessings"
