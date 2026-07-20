@@ -43,14 +43,12 @@ export default function FooterSection({ wedding }: FooterSectionProps) {
         style={{ background: "var(--gold-gradient)", opacity: 0.15 }}
       />
 
-      {/* Decorative background removed for solid color */}
       <div
         className="absolute inset-0 opacity-0"
       />
 
       <div className="container-luxury relative z-10 flex flex-col items-center text-center">
 
-        {/* Arabic Calligraphy */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
