@@ -95,10 +95,8 @@ export default function FooterSection({ wedding }: FooterSectionProps) {
           Two hearts, one soul, a lifetime of love.
         </p>
 
-        {/* Divider line */}
         <div style={{ width: "120px", height: "1px", background: "var(--gold-gradient)", opacity: 0.25, margin: "2rem 0" }} />
 
-        {/* Couple names */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
