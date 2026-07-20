@@ -29,7 +29,7 @@ const PARTICLES = [
   { w: 1.2, h: 2.0, l: 63, t: 72, dur: 3.8, delay: 1.5 },
   { w: 2.5, h: 1.5, l: 78, t: 38, dur: 5.5, delay: 0.2 },
   { w: 1.8, h: 2.2, l: 90, t: 60, dur: 4.7, delay: 0.9 },
-  { w: 2.0, h: 1.6, l: 5,  t: 85, dur: 5.0, delay: 1.8 },
+  { w: 2.0, h: 1.6, l: 5, t: 85, dur: 5.0, delay: 1.8 },
   { w: 1.4, h: 2.8, l: 35, t: 42, dur: 4.3, delay: 0.4 },
   { w: 2.6, h: 1.4, l: 55, t: 90, dur: 6.2, delay: 1.2 },
   { w: 1.9, h: 2.1, l: 72, t: 10, dur: 3.6, delay: 0.6 },
@@ -313,7 +313,7 @@ export default function OpeningScreen({ wedding, onOpen }: OpeningScreenProps) {
                       fontSize: "clamp(2.8rem, 10vw, 4rem)",
                       color: "#F8F0E3", lineHeight: 1.1, fontWeight: 400,
                     }}>
-                      {wedding.groomFirstName} &amp; {wedding.brideFirstName}
+                      {wedding.groomFirstName || 'Dilshad'} &amp; {wedding.brideFirstName || 'Shadha'}
                     </h1>
                   </div>
 
@@ -334,15 +334,28 @@ export default function OpeningScreen({ wedding, onOpen }: OpeningScreenProps) {
                     <div style={{ width: "52px", height: "1px", background: "#F8F0E3", opacity: 0.4 }} />
                   </div>
 
-                  {/* Bouncing chevron */}
-                  <motion.svg
-                    width="18" height="11" viewBox="0 0 18 11" fill="none"
-                    style={{ opacity: 0.45 }}
-                    animate={{ y: [0, 5, 0] }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <path d="M1 1L9 9L17 1" stroke="#F8F0E3" strokeWidth="1.5" strokeLinecap="round" />
-                  </motion.svg>
+                  {/* Pulsing Tap Target */}
+                  <div style={{ position: "relative", width: "24px", height: "24px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <motion.div
+                      style={{
+                        position: "absolute",
+                        width: "100%", height: "100%",
+                        borderRadius: "50%",
+                        border: "1px solid #F8F0E3",
+                      }}
+                      animate={{ scale: [1, 2], opacity: [0.8, 0] }}
+                      transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
+                    />
+                    <motion.div
+                      style={{
+                        width: "6px", height: "6px",
+                        borderRadius: "50%",
+                        background: "#F8F0E3",
+                      }}
+                      animate={{ opacity: [0.4, 1, 0.4] }}
+                      transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+                    />
+                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
