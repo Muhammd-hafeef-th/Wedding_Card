@@ -1,29 +1,26 @@
 // middleware.ts
-// Protect all /admin routes without loading full NextAuth config (which requires Node.js runtime for Mongoose)
+// Protect all /admin routes using Edge-compatible authConfig
 
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { getToken } from "next-auth/jwt";
+import NextAuth from "next-auth";
+import { authConfig } from "@/lib/auth.config";
 
-export async function middleware(req: NextRequest) {
+const { auth } = NextAuth(authConfig);
+
+export default auth((req) => {
+  const isLoggedIn = !!req.auth;
   const { nextUrl } = req;
-  // getToken reads the JWT token from the NextAuth cookie
-  const token = await getToken({ req, secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET });
-  const isLoggedIn = !!token;
 
   const isAdminRoute = nextUrl.pathname.startsWith("/admin");
   const isLoginRoute = nextUrl.pathname === "/login";
 
   if (isAdminRoute && !isLoggedIn) {
-    return NextResponse.redirect(new URL("/login", nextUrl));
+    return Response.redirect(new URL("/login", nextUrl));
   }
 
   if (isLoginRoute && isLoggedIn) {
-    return NextResponse.redirect(new URL("/admin/dashboard", nextUrl));
+    return Response.redirect(new URL("/admin/dashboard", nextUrl));
   }
-
-  return NextResponse.next();
-}
+});
 
 export const config = {
   matcher: ["/admin/:path*", "/login"],
