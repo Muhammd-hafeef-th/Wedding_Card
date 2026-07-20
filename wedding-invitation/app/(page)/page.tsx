@@ -16,12 +16,8 @@ import { WeddingData, GalleryItem, VenueData } from "@/types";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Default data fallback so page renders even without DB
-const DEFAULT_WEDDING: WeddingData = {
+const DEFAULT_WEDDING = {
   title: "We Are Getting Married",
-  brideFirstName: "Zara",
-  brideLastName: "Khan",
-  groomFirstName: "Aryan",
-  groomLastName: "Sharma",
   date: "2025-12-20",
   time: "18:00",
   venue: "The Grand Palace, New Delhi",

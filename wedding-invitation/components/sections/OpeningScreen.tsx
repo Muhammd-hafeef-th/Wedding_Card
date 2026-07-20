@@ -69,7 +69,7 @@ export default function OpeningScreen({ wedding, onOpen }: OpeningScreenProps) {
   // Particles
   const particles = Array.from({ length: 40 });
 
-  const monogram = `${wedding.groomFirstName?.[0] || "A"}&${wedding.brideFirstName?.[0] || "Z"}`;
+  const monogram = `${wedding.groomFirstName?.[0] || " "}&${wedding.brideFirstName?.[0] || " "}`;
 
   return (
     <AnimatePresence mode="wait">
@@ -164,11 +164,11 @@ export default function OpeningScreen({ wedding, onOpen }: OpeningScreenProps) {
                 <h1 className="text-5xl md:text-6xl font-normal leading-none" style={{ fontFamily: "'Great Vibes', cursive", color: "#c9a15c" }}>
                   {wedding.groomFirstName}
                 </h1>
-                
+
                 <span className="text-sm italic" style={{ fontFamily: "'Playfair Display', serif", color: "var(--text-muted)" }}>
                   and
                 </span>
-                
+
                 <h1 className="text-5xl md:text-6xl font-normal leading-none" style={{ fontFamily: "'Great Vibes', cursive", color: "#c9a15c" }}>
                   {wedding.brideFirstName}
                 </h1>
