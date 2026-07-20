@@ -48,7 +48,7 @@ export default function SectionTitle({
         className="font-light"
         style={{
           fontFamily: "'Great Vibes', cursive",
-          fontSize: "clamp(3.5rem, 8vw, 5.5rem)",
+          fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
           lineHeight: 1,
           color: "var(--gold)",
           letterSpacing: "0",

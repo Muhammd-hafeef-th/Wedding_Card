@@ -108,7 +108,7 @@ export default function ItinerarySection({ wedding, venue }: ItinerarySectionPro
         <div style={{ marginBottom: "4rem" }}>
           <SectionTitle
             eyebrow="The Celebrations"
-            title="Details of the Blessed Days"
+            title="Forever Begins"
           />
         </div>
 
