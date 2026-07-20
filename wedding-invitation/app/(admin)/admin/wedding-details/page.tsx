@@ -165,7 +165,7 @@ export default function WeddingDetailsPage() {
               {field("invitationText", "Invitation Text")}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 {field("date", "Wedding Date", "date")}
-                {field("time", "Wedding Time", "time")}
+                {field("time", "Wedding Time", "text", "e.g. 04:00 PM")}
               </div>
               {field("venue", "Venue Name")}
               <AudioUpload value={data.heroMusicUrl || ""} onChange={(url) => setData({ ...data, heroMusicUrl: url })} folder="wedding/audio" label="Website Audio Track" />

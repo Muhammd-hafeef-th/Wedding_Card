@@ -19,6 +19,41 @@ export default function ItinerarySection({ wedding, venue }: ItinerarySectionPro
     year: "numeric"
   });
 
+  // Format time to 12-hour AM/PM
+  const formatTime12Hour = (timeStr: string) => {
+    try {
+      const cleanStr = timeStr.trim();
+      const ampmMatch = cleanStr.match(/^(\d+):(\d+)\s*(AM|PM)/i);
+      
+      if (ampmMatch) {
+        // Already contains AM/PM, just format it nicely
+        let h = parseInt(ampmMatch[1], 10);
+        const m = ampmMatch[2];
+        const ampm = ampmMatch[3].toUpperCase();
+        h = h % 12;
+        h = h ? h : 12;
+        const strHours = h < 10 ? `0${h}` : h;
+        return `${strHours}:${m} ${ampm}`;
+      }
+      
+      const match = cleanStr.match(/^(\d+):(\d+)/);
+      if (!match) return timeStr;
+      
+      let hours = parseInt(match[1], 10);
+      const minutes = match[2];
+      const ampm = hours >= 12 ? "PM" : "AM";
+      
+      hours = hours % 12;
+      hours = hours ? hours : 12; 
+      
+      const strHours = hours < 10 ? `0${hours}` : hours;
+      return `${strHours}:${minutes} ${ampm}`;
+    } catch (e) {
+      return timeStr;
+    }
+  };
+  const formattedTime = formatTime12Hour(wedding.time);
+
   // Calendar dates generator
   const getCalendarDates = () => {
     try {
@@ -163,7 +198,7 @@ export default function ItinerarySection({ wedding, venue }: ItinerarySectionPro
                     Time
                   </span>
                   <span className="itinerary-value">
-                    {wedding.time}
+                    {formattedTime}
                   </span>
                 </div>
 

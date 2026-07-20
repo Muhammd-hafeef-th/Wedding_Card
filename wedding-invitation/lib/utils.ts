@@ -34,7 +34,31 @@ export function getDaysUntil(dateStr: string): number {
 }
 
 export function getCountdownValues(dateStr: string, timeStr?: string) {
-  const targetDate = new Date(`${dateStr}T${timeStr || "00:00:00"}`);
+  let parsedHours = 0;
+  let parsedMinutes = 0;
+  
+  if (timeStr) {
+    const ampmMatch = timeStr.trim().match(/^(\d+):(\d+)\s*(AM|PM)/i);
+    const standardMatch = timeStr.trim().match(/^(\d+):(\d+)/);
+    
+    if (ampmMatch) {
+      let h = parseInt(ampmMatch[1], 10);
+      parsedMinutes = parseInt(ampmMatch[2], 10);
+      const ampm = ampmMatch[3].toUpperCase();
+      if (ampm === "PM" && h < 12) h += 12;
+      if (ampm === "AM" && h === 12) h = 0;
+      parsedHours = h;
+    } else if (standardMatch) {
+      parsedHours = parseInt(standardMatch[1], 10);
+      parsedMinutes = parseInt(standardMatch[2], 10);
+    }
+  }
+
+  const targetDate = new Date(dateStr);
+  if (!isNaN(targetDate.getTime())) {
+    targetDate.setHours(parsedHours, parsedMinutes, 0, 0);
+  }
+  
   const now = new Date();
   const diff = targetDate.getTime() - now.getTime();
 
