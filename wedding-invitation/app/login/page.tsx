@@ -22,17 +22,23 @@ export default function LoginPage() {
     setLoading(true);
     setError("");
 
-    const result = await signIn("credentials", {
-      email: form.email,
-      password: form.password,
-      redirect: false,
-    });
+    try {
+      const result = await signIn("credentials", {
+        email: form.email,
+        password: form.password,
+        redirect: false,
+      });
 
-    if (result?.error) {
-      setError("Invalid email or password");
+      if (result?.error) {
+        setError("Invalid email or password (or Server Configuration Error)");
+      } else {
+        router.push("/admin/dashboard");
+      }
+    } catch (err) {
+      console.error("Sign in exception:", err);
+      setError("A network or server error occurred. Check Vercel logs.");
+    } finally {
       setLoading(false);
-    } else {
-      router.push("/admin/dashboard");
     }
   };
 
