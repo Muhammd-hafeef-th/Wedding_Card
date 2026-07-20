@@ -9,7 +9,7 @@ export default function RSVPSection() {
     guestName: "",
     phone: "",
     attendance: "yes",
-    guestCount: 1,
+    guestCount: 0,
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -39,7 +39,7 @@ export default function RSVPSection() {
   return (
     <section id="rsvp" className="section-padding relative">
       <div className="container-luxury relative z-10">
-        
+
         {/* Custom Centered Wrapper */}
         <div className="rsvp-wrapper">
           <AnimatePresence mode="wait">
@@ -95,7 +95,7 @@ export default function RSVPSection() {
 
                 {/* Content Area */}
                 <div className="rsvp-content">
-                  
+
                   {/* Inside Heading */}
                   <h3 className="rsvp-title">
                     Will You Join Us?
@@ -155,10 +155,10 @@ export default function RSVPSection() {
                     </label>
                     <input
                       type="number"
-                      min={1}
-                      max={10}
+                      min={0}
+                      max={20}
                       value={form.guestCount}
-                      onChange={(e) => setForm({ ...form, guestCount: parseInt(e.target.value) || 1 })}
+                      onChange={(e) => setForm({ ...form, guestCount: parseInt(e.target.value) || 0 })}
                       className="rsvp-input"
                       style={{ maxWidth: "100px" }}
                     />
@@ -172,10 +172,10 @@ export default function RSVPSection() {
 
                   {/* Submit Button */}
                   <div className="rsvp-submit-btn-wrapper">
-                    <GoldButton 
-                      type="submit" 
-                      disabled={status === "loading"} 
-                      size="md" 
+                    <GoldButton
+                      type="submit"
+                      disabled={status === "loading"}
+                      size="md"
                       className="w-full flex items-center justify-center py-3.5"
                     >
                       {status === "loading" ? "Submitting..." : "Send RSVP"}

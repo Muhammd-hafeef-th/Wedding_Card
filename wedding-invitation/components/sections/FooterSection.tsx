@@ -81,19 +81,19 @@ export default function FooterSection({ wedding }: FooterSectionProps) {
           transition={{ duration: 0.8, delay: 0.1 }}
           className="mt-3 flex flex-col items-center"
         >
-          <p
-            className="font-heading italic text-sm"
-            style={{ color: "var(--text-muted)", opacity: 0.8 }}
-          >
-            With Love,
-          </p>
-          <p
-            className="font-body text-[10px] md:text-xs tracking-wider mt-1 opacity-70"
-            style={{ color: "var(--text-main)" }}
-          >
-            Mangalathel House, Maranchery &bull; Oravampurth House, Melattur
-          </p>
-        </motion.div>
+
+        </motion.div><p
+          className="font-heading italic text-sm"
+          style={{ color: "var(--text-muted)", opacity: 0.8 }}
+        >
+          With Love,
+        </p>
+        <p
+          className="font-body text-[10px] md:text-xs tracking-wider mt-1 opacity-70"
+          style={{ color: "var(--text-main)" }}
+        >
+          Two hearts, one soul, a lifetime of love.
+        </p>
 
         {/* Divider line */}
         <div style={{ width: "120px", height: "1px", background: "var(--gold-gradient)", opacity: 0.25, margin: "2rem 0" }} />
