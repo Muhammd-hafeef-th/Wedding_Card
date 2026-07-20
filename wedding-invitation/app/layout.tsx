@@ -1,16 +1,53 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: "Aryan & Zara — Wedding Invitation",
-  description: "Join us in celebrating the union of Aryan Sharma and Zara Khan. A luxury digital wedding invitation.",
-  keywords: ["wedding", "invitation", "luxury", "ceremony"],
-  openGraph: {
-    title: "Aryan & Zara — Wedding Invitation",
-    description: "Join us in celebrating the union of Aryan Sharma and Zara Khan.",
-    type: "website",
-  },
-};
+// Fetch wedding data at build/request time for dynamic metadata
+async function getWeddingData() {
+  try {
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL ||
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+    const res = await fetch(`${baseUrl}/api/wedding`, { next: { revalidate: 60 } });
+    if (!res.ok) return null;
+    return await res.json();
+  } catch {
+    return null;
+  }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const wedding = await getWeddingData();
+
+  const groomName = wedding?.groomFirstName && wedding?.groomLastName
+    ? `${wedding.groomFirstName} ${wedding.groomLastName}`
+    : wedding?.groomFirstName || "Groom";
+
+  const brideName = wedding?.brideFirstName && wedding?.brideLastName
+    ? `${wedding.brideFirstName} ${wedding.brideLastName}`
+    : wedding?.brideFirstName || "Bride";
+
+  const title = `${wedding?.groomFirstName || "Groom"} & ${wedding?.brideFirstName || "Bride"} — Wedding Invitation`;
+  const description = `Join us in celebrating the union of ${groomName} and ${brideName}. A luxury digital wedding invitation.`;
+  const weddingDate = wedding?.date
+    ? new Date(wedding.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+    : "";
+
+  return {
+    title,
+    description,
+    keywords: ["wedding", "invitation", "nikah", "ceremony", wedding?.groomFirstName, wedding?.brideFirstName].filter(Boolean) as string[],
+    openGraph: {
+      title,
+      description: `${groomName} & ${brideName}${weddingDate ? ` · ${weddingDate}` : ""}`,
+      type: "website",
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description,
+    },
+  };
+}
 
 export default function RootLayout({
   children,

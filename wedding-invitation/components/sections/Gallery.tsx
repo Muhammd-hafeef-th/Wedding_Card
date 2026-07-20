@@ -135,7 +135,7 @@ export default function Gallery({ items }: GalleryProps) {
 
                   <motion.div
                     className="absolute inset-0 flex flex-col items-center justify-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-500"
-                    style={{ background: "linear-gradient(to top, rgba(31,23,23,0.9) 0%, rgba(31,23,23,0) 100%)" }}
+                    style={{ background: "transparent" }}
                   >
                     <span className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white mb-3 backdrop-blur-sm">
                       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>

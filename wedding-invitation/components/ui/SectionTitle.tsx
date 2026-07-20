@@ -32,19 +32,17 @@ export default function SectionTitle({
       transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
       {eyebrow && (
-        <span
-          className="font-body text-xs tracking-[0.35em] uppercase"
-          style={{ color: "var(--gold)" }}
-        >
-          {eyebrow}
-        </span>
+        <div className="flex items-center gap-4 w-full" style={{ justifyContent: align === "center" ? "center" : align === "left" ? "flex-start" : "flex-end" }}>
+          <div style={{ height: "1px", width: "40px", backgroundColor: "var(--gold)", opacity: 0.6 }} />
+          <span
+            className="font-body text-[10px] md:text-xs tracking-[0.25em] uppercase whitespace-nowrap"
+            style={{ color: "var(--gold)" }}
+          >
+            {eyebrow}
+          </span>
+          <div style={{ height: "1px", width: "40px", backgroundColor: "var(--gold)", opacity: 0.6 }} />
+        </div>
       )}
-
-      <div className="divider-ornament w-full justify-start" style={{ justifyContent: align === "center" ? "center" : align === "left" ? "flex-start" : "flex-end" }}>
-        <div className="divider-gold" style={{ margin: "0" }} />
-        <span style={{ color: "var(--gold)", fontSize: "1.25rem" }}>✦</span>
-        <div className="divider-gold" style={{ margin: "0" }} />
-      </div>
 
       <h2
         className="font-light"

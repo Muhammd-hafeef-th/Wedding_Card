@@ -12,6 +12,7 @@ import RSVPSection from "@/components/sections/RSVPSection";
 import WishesSection from "@/components/sections/WishesSection";
 import FooterSection from "@/components/sections/FooterSection";
 import BackgroundEffects from "@/components/ui/BackgroundEffects";
+import Navbar from "@/components/ui/Navbar";
 import { WeddingData, GalleryItem, VenueData } from "@/types";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -87,8 +88,8 @@ export default function InvitationPage() {
           <motion.div
             key="intro-screen"
             className="fixed inset-0 z-[100]"
-            exit={{ opacity: 0, scale: 1.1, filter: "blur(10px)" }}
-            transition={{ duration: 0.9, ease: "easeInOut" }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
           >
             <OpeningScreen
               wedding={wedding}
@@ -108,6 +109,7 @@ export default function InvitationPage() {
             transition={{ duration: 0.8 }}
             className="relative z-0"
           >
+            <Navbar wedding={wedding} />
             <BackgroundEffects />
             <HeroSection wedding={wedding} />
             {gallery.length > 0 && <Gallery items={gallery} />}

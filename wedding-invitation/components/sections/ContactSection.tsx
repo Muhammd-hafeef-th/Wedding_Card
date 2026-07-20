@@ -17,7 +17,7 @@ const contacts: ContactLink[] = [
     label: "Phone",
     value: "+91 98765 43210",
     href: "tel:+919876543210",
-    color: "#D4AF37",
+    color: "#F8F0E3",
   },
   {
     icon: "💬",
@@ -38,7 +38,7 @@ const contacts: ContactLink[] = [
     label: "Location",
     value: "New Delhi, India",
     href: "https://maps.google.com",
-    color: "#D4AF37",
+    color: "#F8F0E3",
   },
 ];
 
@@ -68,8 +68,8 @@ export default function ContactSection() {
               className="flex flex-col items-center gap-3 p-6 rounded-2xl text-center cursor-pointer"
               style={{
                 background: "transparent",
-                border: "1px solid rgba(212,175,55,0.15)",
-                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(248, 240, 227, 0.15)",
+                backdropFilter: "none",
                 textDecoration: "none",
               }}
               initial={{ opacity: 0, y: 30 }}
@@ -78,14 +78,14 @@ export default function ContactSection() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               whileHover={{
                 y: -8,
-                borderColor: "rgba(212,175,55,0.4)",
-                boxShadow: "0 16px 40px rgba(212,175,55,0.15)",
+                borderColor: "rgba(248, 240, 227, 0.4)",
+                boxShadow: "0 16px 40px rgba(248, 240, 227, 0.15)",
               }}
               whileTap={{ scale: 0.97 }}
             >
               <motion.div
                 className="w-14 h-14 rounded-full flex items-center justify-center text-2xl"
-                style={{ background: "linear-gradient(135deg, var(--bg-main), var(--beige))" }}
+                style={{ background: "var(--bg-main)" }}
                 whileHover={{ rotate: 10, scale: 1.1 }}
                 transition={{ duration: 0.3 }}
               >

@@ -43,12 +43,9 @@ export default function FooterSection({ wedding }: FooterSectionProps) {
         style={{ background: "var(--gold-gradient)", opacity: 0.15 }}
       />
 
-      {/* Decorative background */}
+      {/* Decorative background removed for solid color */}
       <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `radial-gradient(circle at 50% 0%, rgba(212,175,55,0.8) 0%, transparent 50%)`,
-        }}
+        className="absolute inset-0 opacity-0"
       />
 
       <div className="container-luxury relative z-10 flex flex-col items-center text-center">

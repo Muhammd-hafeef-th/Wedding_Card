@@ -10,46 +10,6 @@ interface HeroSectionProps {
 }
 
 
-const CornerOrnament = ({ className }: { className?: string }) => (
-  <svg
-    viewBox="0 0 200 200"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-    style={{ stroke: "var(--gold)", opacity: 0.8 }}
-  >
-    <path
-      d="M10 0V40C10 70 30 90 60 90H100"
-      strokeWidth="3"
-      strokeLinecap="round"
-    />
-    <path
-      d="M25 0V30C25 55 45 75 70 75H100"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M10 100C30 100 50 120 50 140C50 160 30 180 10 180"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M100 10C100 30 120 50 140 50C160 50 180 30 180 10"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-    <circle cx="50" cy="140" r="4" fill="var(--gold)" />
-    <circle cx="140" cy="50" r="4" fill="var(--gold)" />
-    <path
-      d="M100 90C120 90 140 110 140 130C140 150 120 170 100 170"
-      strokeWidth="1"
-      strokeDasharray="4 4"
-    />
-  </svg>
-);
-
-
-
 export default function HeroSection({ wedding }: HeroSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -81,21 +41,6 @@ export default function HeroSection({ wedding }: HeroSectionProps) {
         className="relative z-10 w-full max-w-4xl min-h-screen flex flex-col items-center justify-center p-6 md:p-12 lg:p-16"
         style={{ opacity, scale }}
       >
-        {/* Outer Ornate Frame */}
-        <div className="absolute inset-4 md:inset-8 border border-opacity-40 rounded-[2rem] md:rounded-[4rem] pointer-events-none" style={{ borderColor: "var(--gold)" }}>
-          <div className="absolute inset-2 border border-opacity-20 rounded-[1.8rem] md:rounded-[3.8rem]" style={{ borderColor: "var(--gold)" }} />
-
-
-          {/* Top Left */}
-          <CornerOrnament className="absolute -top-1 -left-1 w-16 h-16 md:w-24 md:h-24" />
-          {/* Top Right */}
-          <CornerOrnament className="absolute -top-1 -right-1 w-16 h-16 md:w-24 md:h-24 scale-x-[-1]" />
-          {/* Bottom Left */}
-          <CornerOrnament className="absolute -bottom-1 -left-1 w-16 h-16 md:w-24 md:h-24 scale-y-[-1]" />
-          {/* Bottom Right */}
-          <CornerOrnament className="absolute -bottom-1 -right-1 w-16 h-16 md:w-24 md:h-24 scale-x-[-1] scale-y-[-1]" />
-        </div>
-
 
         {/* Inner Content Wrapper */}
         <div className="relative z-20 flex flex-col items-center justify-center text-center w-full gap-4 md:gap-10 lg:gap-4 max-w-2xl md:max-w-4xl lg:max-w-2xl px-6 py-16 md:py-32 lg:py-24">
@@ -205,21 +150,18 @@ export default function HeroSection({ wedding }: HeroSectionProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, delay: 1.4, ease: "easeOut" }}
-            className="flex items-stretch justify-center gap-4 md:gap-16 lg:gap-8 my-10 md:my-20 lg:my-14 w-[90%] md:w-[85%] lg:w-[75%] max-w-lg md:max-w-2xl lg:max-w-lg border-t border-b border-opacity-20 py-4 md:py-8 lg:py-4 mx-auto"
-            style={{ borderColor: "var(--gold)" }}
+            className="flex items-center justify-center gap-6 md:gap-12 lg:gap-10 my-10 md:my-16 lg:my-12 w-full mx-auto"
           >
-            <div className="flex flex-col items-end justify-center flex-1 text-right">
+            <div className="flex flex-col items-end justify-center text-right">
               <span className="font-heading text-[10px] md:text-sm lg:text-xs tracking-[0.2em] uppercase leading-tight" style={{ color: "var(--text-main)" }}>{dayName}</span>
               <span className="font-heading text-[0.65rem] md:text-xs lg:text-[10px] tracking-[0.1em] mt-1" style={{ color: "var(--text-muted)" }}>{wedding.time}</span>
             </div>
 
-
-            <div className="flex flex-col items-center justify-center px-4 md:px-12 lg:px-8 border-l border-r border-opacity-20" style={{ borderColor: "var(--gold)" }}>
-              <span className="font-heading text-3xl md:text-6xl lg:text-4xl font-light" style={{ color: "var(--gold)", lineHeight: 1 }}>{dayNum}</span>
+            <div className="flex flex-col items-center justify-center px-2">
+              <span className="font-heading text-4xl md:text-6xl lg:text-5xl font-light" style={{ color: "var(--gold)", lineHeight: 1 }}>{dayNum}</span>
             </div>
 
-
-            <div className="flex flex-col items-start justify-center flex-1 text-left">
+            <div className="flex flex-col items-start justify-center text-left">
               <span className="font-heading text-[10px] md:text-sm lg:text-xs tracking-[0.2em] uppercase leading-tight" style={{ color: "var(--text-main)" }}>{monthYear.split(' ')[0]}</span>
               <span className="font-heading text-[0.65rem] md:text-xs lg:text-[10px] tracking-[0.1em] mt-1" style={{ color: "var(--text-muted)" }}>{monthYear.split(' ')[1]}</span>
             </div>

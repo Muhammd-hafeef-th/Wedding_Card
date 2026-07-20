@@ -43,7 +43,7 @@ function ProfileCard({
       <div
         className="absolute top-0 right-0 w-32 h-32 opacity-5"
         style={{
-          background: "var(--gold-gradient)",
+          background: "var(--gold)",
           borderRadius: "0 1.5rem 0 100%",
         }}
       />
@@ -63,9 +63,9 @@ function ProfileCard({
 
       {/* Divider */}
       <div className="flex items-center gap-3 w-full justify-center">
-        <div style={{ flex: 1, height: 1, background: "linear-gradient(to right, transparent, var(--gold))" }} />
+        <div style={{ flex: 1, height: 1, background: "var(--gold)" }} />
         <span style={{ color: "var(--gold)", fontSize: "0.7rem" }}>✦</span>
-        <div style={{ flex: 1, height: 1, background: "linear-gradient(to left, transparent, var(--gold))" }} />
+        <div style={{ flex: 1, height: 1, background: "var(--gold)" }} />
       </div>
 
       {/* Details */}

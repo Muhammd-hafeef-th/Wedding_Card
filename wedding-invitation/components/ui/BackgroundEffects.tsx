@@ -19,18 +19,7 @@ const floatingParticles = [
 export default function BackgroundEffects() {
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {/* Background overlay/gradient for richness and romantic animation */}
-      <motion.div
-        className="absolute inset-0"
-        animate={{
-          background: [
-            "radial-gradient(circle at 50% 50%, rgba(212,175,55,0.08) 0%, transparent 60%)",
-            "radial-gradient(circle at 50% 45%, rgba(212,175,55,0.12) 0%, transparent 65%)",
-            "radial-gradient(circle at 50% 50%, rgba(212,175,55,0.08) 0%, transparent 60%)",
-          ],
-        }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
+      {/* Background overlay removed for solid color */}
       {/* Floating particles for romantic effect */}
       {floatingParticles.map((p, i) => (
         <motion.div
