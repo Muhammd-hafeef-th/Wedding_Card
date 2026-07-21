@@ -117,9 +117,10 @@ export default function InvitationPage() {
             <HeroSection wedding={wedding} venue={venue} />
             {gallery.length > 0 && <Gallery items={gallery} />}
             <ItinerarySection wedding={wedding} venue={venue} />
+            <VenueSection venue={venue} />
             <CountdownSection wedding={wedding} />
             <RSVPSection />
-            <VenueSection venue={venue} />
+
             <FamilySection wedding={wedding} />
             <WishesSection />
             <FooterSection wedding={wedding} />

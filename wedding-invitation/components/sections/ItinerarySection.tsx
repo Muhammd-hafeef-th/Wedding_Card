@@ -24,7 +24,7 @@ export default function ItinerarySection({ wedding, venue }: ItinerarySectionPro
     try {
       const cleanStr = timeStr.trim();
       const ampmMatch = cleanStr.match(/^(\d+):(\d+)\s*(AM|PM)/i);
-      
+
       if (ampmMatch) {
         // Already contains AM/PM, just format it nicely
         let h = parseInt(ampmMatch[1], 10);
@@ -35,17 +35,17 @@ export default function ItinerarySection({ wedding, venue }: ItinerarySectionPro
         const strHours = h < 10 ? `0${h}` : h;
         return `${strHours}:${m} ${ampm}`;
       }
-      
+
       const match = cleanStr.match(/^(\d+):(\d+)/);
       if (!match) return timeStr;
-      
+
       let hours = parseInt(match[1], 10);
       const minutes = match[2];
       const ampm = hours >= 12 ? "PM" : "AM";
-      
+
       hours = hours % 12;
-      hours = hours ? hours : 12; 
-      
+      hours = hours ? hours : 12;
+
       const strHours = hours < 10 ? `0${hours}` : hours;
       return `${strHours}:${minutes} ${ampm}`;
     } catch (e) {
@@ -103,12 +103,12 @@ export default function ItinerarySection({ wedding, venue }: ItinerarySectionPro
 
   const calendarDates = getCalendarDates(wedding.date, wedding.time);
   const nikkahCalendarDates = getCalendarDates(wedding.nikkahDate || "", wedding.nikkahTime || "");
-  
+
   const eventTitle = `Wedding of ${wedding.brideFirstName} & ${wedding.groomFirstName}`;
   const nikkahEventTitle = `Nikkah of ${wedding.brideFirstName} & ${wedding.groomFirstName}`;
   const eventDetails = ` Nikah Ceremony: Join us in celebrating the union of ${wedding.brideFirstName} and ${wedding.groomFirstName}. We look forward to your presence.`;
 
-  const generateGoogleCalLink = (dates: {start: string, end: string}, title: string, details: string, location: string) => {
+  const generateGoogleCalLink = (dates: { start: string, end: string }, title: string, details: string, location: string) => {
     return dates.start && dates.end
       ? `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${dates.start}/${dates.end}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(location)}`
       : "#";
@@ -117,7 +117,7 @@ export default function ItinerarySection({ wedding, venue }: ItinerarySectionPro
   const googleCalLink = generateGoogleCalLink(calendarDates, eventTitle, eventDetails, wedding.venue);
   const nikkahGoogleCalLink = generateGoogleCalLink(nikkahCalendarDates, nikkahEventTitle, eventDetails, venue.nikkahVenue?.name || "Venue");
 
-  const handleAppleCalendarDownload = (e: React.MouseEvent<HTMLAnchorElement>, dates: {start: string, end: string}, title: string, details: string, location: string, filename: string) => {
+  const handleAppleCalendarDownload = (e: React.MouseEvent<HTMLAnchorElement>, dates: { start: string, end: string }, title: string, details: string, location: string, filename: string) => {
     if (!dates.start || !dates.end) return;
     e.preventDefault();
 
@@ -158,7 +158,7 @@ export default function ItinerarySection({ wedding, venue }: ItinerarySectionPro
 
         {/* Custom Centered Wrapper */}
         <div className="itinerary-wrapper" style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "2rem" }}>
-          
+
           {/* Nikkah Card (Optional) */}
           {wedding.nikkahDate && (
             <motion.div
@@ -198,14 +198,7 @@ export default function ItinerarySection({ wedding, venue }: ItinerarySectionPro
                   </div>
                 </div>
                 <div className="itinerary-buttons">
-                  <a
-                    href={venue.nikkahVenue?.googleMapLink || venue.googleMapLink || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="itinerary-btn"
-                  >
-                    Location
-                  </a>
+
                   <a
                     href={nikkahGoogleCalLink}
                     target="_blank"
@@ -289,7 +282,7 @@ export default function ItinerarySection({ wedding, venue }: ItinerarySectionPro
                     </div>
                   </div>
                 )}
-                
+
                 {venue.brideVenue?.name && (
                   <div className="itinerary-row">
                     <span className="itinerary-label" style={{ whiteSpace: "nowrap" }}>Bride&apos;s Venue</span>
@@ -320,14 +313,7 @@ export default function ItinerarySection({ wedding, venue }: ItinerarySectionPro
 
               {/* Action Buttons */}
               <div className="itinerary-buttons">
-                <a
-                  href={venue.googleMapLink || "#"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="itinerary-btn"
-                >
-                  Location
-                </a>
+
                 <a
                   href={googleCalLink}
                   target="_blank"
