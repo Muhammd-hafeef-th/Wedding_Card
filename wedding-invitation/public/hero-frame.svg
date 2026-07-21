@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1400" width="100%" height="100%">
+  <defs>
+    <g id="quarter">
+      <!-- Main Outer Frame Arc -->
+      <path d="M 500,20 C 350,20 200,30 150,150 C 100,270 20,400 20,700" fill="none" stroke="#D4AF37" stroke-width="4" />
+      <path d="M 500,35 C 360,35 220,45 170,160 C 120,275 40,390 40,700" fill="none" stroke="#D4AF37" stroke-width="1.5" />
+      
+      <!-- Ornate Swirls -->
+      <path d="M 500,20 C 450,-10 400,20 420,60 C 440,100 480,100 480,60 C 480,30 430,30 400,80" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" />
+      <path d="M 420,60 C 400,60 380,80 390,110 C 400,140 430,130 430,100" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" />
+      
+      <!-- Corner Flourish -->
+      <path d="M 150,150 C 130,120 100,100 70,120 C 40,140 50,180 80,180 C 110,180 120,150 100,130" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" />
+      <path d="M 120,100 C 120,70 150,60 170,80 C 190,100 180,130 160,130" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" />
+      
+      <path d="M 80,180 C 50,180 20,210 30,240 C 40,270 70,260 70,230" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" />
+      <path d="M 160,200 C 180,210 200,230 180,260 C 160,290 130,270 130,240" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" />
+      
+      <!-- Side Flourish -->
+      <path d="M 20,700 C -10,650 20,600 60,620 C 100,640 100,680 60,680 C 30,680 30,630 80,600" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" />
+      <path d="M 60,620 C 60,600 80,580 110,590 C 140,600 130,630 100,630" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" />
+
+      <!-- Inner decorative elements -->
+      <circle cx="480" cy="60" r="4" fill="#D4AF37" />
+      <circle cx="80" cy="180" r="4" fill="#D4AF37" />
+      <circle cx="60" cy="680" r="4" fill="#D4AF37" />
+      
+      <!-- Tiny Leaves -->
+      <path d="M 250,90 Q 230,100 240,120 Q 260,110 250,90 Z" fill="#D4AF37" />
+      <path d="M 270,70 Q 290,60 280,40 Q 260,50 270,70 Z" fill="#D4AF37" />
+      <path d="M 100,300 Q 80,310 90,330 Q 110,320 100,300 Z" fill="#D4AF37" />
+      <path d="M 70,500 Q 50,490 40,470 Q 60,460 70,500 Z" fill="#D4AF37" />
+    </g>
+  </defs>
+  
+  <use href="#quarter" />
+  <use href="#quarter" transform="scale(-1, 1) translate(-1000, 0)" />
+  <use href="#quarter" transform="scale(1, -1) translate(0, -1400)" />
+  <use href="#quarter" transform="scale(-1, -1) translate(-1000, -1400)" />
+  
+  <!-- Add top and bottom center motifs -->
+  <path d="M 450,20 Q 500,5 550,20" fill="none" stroke="#D4AF37" stroke-width="4" />
+  <path d="M 450,1380 Q 500,1395 550,1380" fill="none" stroke="#D4AF37" stroke-width="4" />
+</svg>
