@@ -110,6 +110,72 @@ export default function WeddingDetailsPage() {
     </div>
   );
 
+  const dynamicArrayField = (key: "brideSiblings" | "groomSiblings", label: string) => {
+    const list = data[key] || [];
+    return (
+      <div className="flex flex-col gap-3">
+        <label style={labelStyle}>{label}</label>
+        {list.map((item, index) => (
+          <div key={index} className="flex gap-2">
+            <input
+              type="text"
+              value={item}
+              onChange={(e) => {
+                const newList = [...list];
+                newList[index] = e.target.value;
+                setData({ ...data, [key]: newList });
+              }}
+              placeholder="e.g. Brother: John Doe"
+              style={{ ...inputStyle, flex: 1 }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "#D4AF37";
+                e.target.style.boxShadow = "0 0 0 3px rgba(212,175,55,0.1)";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = "rgba(212,175,55,0.2)";
+                e.target.style.boxShadow = "inset 0 2px 4px rgba(0,0,0,0.02)";
+              }}
+            />
+            <button
+              onClick={() => {
+                const newList = list.filter((_, i) => i !== index);
+                setData({ ...data, [key]: newList });
+              }}
+              style={{
+                background: "#fdf2f2",
+                color: "#e11d48",
+                border: "1px solid #fecdd3",
+                borderRadius: "1rem",
+                padding: "0 1rem",
+                fontWeight: 600,
+                cursor: "pointer"
+              }}
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <button
+          onClick={() => setData({ ...data, [key]: [...list, ""] })}
+          style={{
+            background: "#FFFDF8",
+            color: "#D4AF37",
+            border: "1px dashed rgba(212,175,55,0.5)",
+            borderRadius: "1rem",
+            padding: "0.85rem",
+            fontWeight: 600,
+            cursor: "pointer",
+            transition: "all 0.3s ease"
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.background = "#FAF7F0")}
+          onMouseLeave={(e) => (e.currentTarget.style.background = "#FFFDF8")}
+        >
+          + Add Sibling
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div style={{ padding: "clamp(1rem, 2.2vw, 1.75rem)", minHeight: "100vh", background: "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(212,175,55,0.05) 100%)" }}>
       <div style={{ maxWidth: "1400px", margin: "0 auto", display: "flex", flexDirection: "column", gap: "1.25rem" }}>
@@ -167,6 +233,10 @@ export default function WeddingDetailsPage() {
                 {field("date", "Wedding Date", "date")}
                 {field("time", "Wedding Time", "text", "e.g. 04:00 PM")}
               </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                {field("nikkahDate", "Nikkah Date", "date")}
+                {field("nikkahTime", "Nikkah Time", "text", "e.g. 10:00 AM")}
+              </div>
               {field("venue", "Venue Name")}
               <AudioUpload value={data.heroMusicUrl || ""} onChange={(url) => setData({ ...data, heroMusicUrl: url })} folder="wedding/audio" label="Website Audio Track" />
             </div>
@@ -202,6 +272,7 @@ export default function WeddingDetailsPage() {
               {field("groomPaternalGrandparents", "Paternal Grandparents")}
               {field("groomMaternalGrandparents", "Maternal Grandparents")}
             </div>
+            {dynamicArrayField("groomSiblings", "Siblings")}
           </motion.div>
 
           <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}>
@@ -215,6 +286,7 @@ export default function WeddingDetailsPage() {
               {field("bridePaternalGrandparents", "Paternal Grandparents")}
               {field("brideMaternalGrandparents", "Maternal Grandparents")}
             </div>
+            {dynamicArrayField("brideSiblings", "Siblings")}
           </motion.div>
         </div>
 

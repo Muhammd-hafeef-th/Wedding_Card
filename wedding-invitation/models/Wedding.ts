@@ -9,6 +9,8 @@ export interface IWedding extends Document {
   groomLastName: string;
   date: string;
   time: string;
+  nikkahDate?: string;
+  nikkahTime?: string;
   venue: string;
   subtitle: string;
   invitationText: string;
@@ -29,6 +31,8 @@ export interface IWedding extends Document {
   brideMaternalGrandparents?: string;
   groomPaternalGrandparents?: string;
   groomMaternalGrandparents?: string;
+  brideSiblings?: string[];
+  groomSiblings?: string[];
 }
 
 const WeddingSchema = new Schema<IWedding>(
@@ -40,6 +44,8 @@ const WeddingSchema = new Schema<IWedding>(
     groomLastName: { type: String, default: "Sharma" },
     date: { type: String, default: "2025-12-20" },
     time: { type: String, default: "18:00" },
+    nikkahDate: { type: String, default: "" },
+    nikkahTime: { type: String, default: "" },
     venue: { type: String, default: "The Grand Palace, New Delhi" },
     subtitle: { type: String, default: "Two souls, one destiny" },
     invitationText: {
@@ -64,6 +70,8 @@ const WeddingSchema = new Schema<IWedding>(
     brideMaternalGrandparents: { type: String, default: "" },
     groomPaternalGrandparents: { type: String, default: "" },
     groomMaternalGrandparents: { type: String, default: "" },
+    brideSiblings: { type: [String], default: [] },
+    groomSiblings: { type: [String], default: [] },
   },
   { timestamps: true }
 );

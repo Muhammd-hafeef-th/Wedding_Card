@@ -10,6 +10,8 @@ export interface WeddingData {
   groomLastName: string;
   date: string; // ISO date string
   time: string;
+  nikkahDate?: string;
+  nikkahTime?: string;
   venue: string;
   subtitle: string;
   invitationText: string;
@@ -30,6 +32,8 @@ export interface WeddingData {
   brideMaternalGrandparents?: string;
   groomPaternalGrandparents?: string;
   groomMaternalGrandparents?: string;
+  brideSiblings?: string[];
+  groomSiblings?: string[];
   updatedAt?: string;
 }
 
@@ -72,11 +76,22 @@ export interface FamilyMember {
   displayOrder: number;
 }
 
-export interface VenueData {
-  _id?: string;
+export interface VenueDetail {
   name: string;
   address: string;
   googleMapLink: string;
+  googleMapEmbed?: string;
+}
+
+export interface VenueData {
+  _id?: string;
+  groomVenue?: VenueDetail;
+  brideVenue?: VenueDetail;
+  nikkahVenue?: VenueDetail;
+  // legacy fields
+  name?: string;
+  address?: string;
+  googleMapLink?: string;
   googleMapEmbed?: string;
   parkingInfo?: string;
   accommodation?: string;

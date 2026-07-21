@@ -20,14 +20,14 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const groomName = wedding?.groomFirstName && wedding?.groomLastName
     ? `${wedding.groomFirstName} ${wedding.groomLastName}`
-    : wedding?.groomFirstName || "Groom";
+    : wedding?.groomFirstName || "Dilshad";
 
   const brideName = wedding?.brideFirstName && wedding?.brideLastName
     ? `${wedding.brideFirstName} ${wedding.brideLastName}`
-    : wedding?.brideFirstName || "Bride";
+    : wedding?.brideFirstName || "Shadha";
 
-  const title = `${wedding?.groomFirstName || "Groom"} & ${wedding?.brideFirstName || "Bride"} — Wedding Invitation`;
-  const description = `Join us in celebrating the union of ${groomName} and ${brideName}. A luxury digital wedding invitation.`;
+  const title = `${wedding?.groomFirstName || "Dilshad"} & ${wedding?.brideFirstName || "Shadha"} — Wedding Invitation`;
+  const description = `Join us in celebrating the union of ${groomName || 'Dilshad'} and ${brideName || 'Shadha'}. A luxury digital wedding invitation.`;
   const weddingDate = wedding?.date
     ? new Date(wedding.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
     : "";
@@ -38,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
     keywords: ["wedding", "invitation", "nikah", "ceremony", wedding?.groomFirstName, wedding?.brideFirstName].filter(Boolean) as string[],
     openGraph: {
       title,
-      description: `${groomName} & ${brideName}${weddingDate ? ` · ${weddingDate}` : ""}`,
+      description: `${groomName || 'Dilshad'} & ${brideName || 'Shadha'}${weddingDate ? ` · ${weddingDate}` : ""}`,
       type: "website",
     },
     twitter: {

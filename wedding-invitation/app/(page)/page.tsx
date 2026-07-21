@@ -42,6 +42,9 @@ const DEFAULT_VENUE: VenueData = {
   parkingInfo: "Complimentary valet parking available",
   accommodation: "Guest accommodations arranged at the venue hotel",
   imageUrl: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1200",
+  groomVenue: { name: "", address: "", googleMapLink: "", googleMapEmbed: "" },
+  brideVenue: { name: "", address: "", googleMapLink: "", googleMapEmbed: "" },
+  nikkahVenue: { name: "", address: "", googleMapLink: "", googleMapEmbed: "" },
 };
 
 export default function InvitationPage() {
@@ -111,7 +114,7 @@ export default function InvitationPage() {
           >
             <Navbar wedding={wedding} />
             <BackgroundEffects />
-            <HeroSection wedding={wedding} />
+            <HeroSection wedding={wedding} venue={venue} />
             {gallery.length > 0 && <Gallery items={gallery} />}
             <ItinerarySection wedding={wedding} venue={venue} />
             <CountdownSection wedding={wedding} />

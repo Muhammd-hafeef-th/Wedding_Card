@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import GoldButton from "@/components/ui/GoldButton";
-import { VenueData } from "@/types";
+import { VenueData, VenueDetail } from "@/types";
 
 const inputStyle: React.CSSProperties = {
   width: "100%",
@@ -96,42 +96,45 @@ export default function VenueAdminPage() {
     }
   };
 
-  const field = (key: keyof VenueData, label: string, type = "text", rows?: number) => (
-    <div className="flex flex-col">
-      <label style={labelStyle}>{label}</label>
-      {rows ? (
-        <textarea
-          rows={rows}
-          value={(data[key] as string) || ""}
-          onChange={(e) => setData({ ...data, [key]: e.target.value })}
-          style={{ ...inputStyle, resize: "vertical" }}
-          onFocus={(e) => {
-            e.target.style.borderColor = "#D4AF37";
-            e.target.style.boxShadow = "0 0 0 3px rgba(212,175,55,0.1)";
-          }}
-          onBlur={(e) => {
-            e.target.style.borderColor = "rgba(212,175,55,0.2)";
-            e.target.style.boxShadow = "inset 0 2px 4px rgba(0,0,0,0.02)";
-          }}
-        />
-      ) : (
-        <input
-          type={type}
-          value={(data[key] as string) || ""}
-          onChange={(e) => setData({ ...data, [key]: e.target.value })}
-          style={inputStyle}
-          onFocus={(e) => {
-            e.target.style.borderColor = "#D4AF37";
-            e.target.style.boxShadow = "0 0 0 3px rgba(212,175,55,0.1)";
-          }}
-          onBlur={(e) => {
-            e.target.style.borderColor = "rgba(212,175,55,0.2)";
-            e.target.style.boxShadow = "inset 0 2px 4px rgba(0,0,0,0.02)";
-          }}
-        />
-      )}
-    </div>
-  );
+  const nestedField = (parentKey: "groomVenue" | "brideVenue" | "nikkahVenue", key: keyof VenueDetail, label: string, type = "text", rows?: number) => {
+    const parent = data[parentKey] || { name: "", address: "", googleMapLink: "", googleMapEmbed: "" };
+    return (
+      <div className="flex flex-col">
+        <label style={labelStyle}>{label}</label>
+        {rows ? (
+          <textarea
+            rows={rows}
+            value={parent[key] || ""}
+            onChange={(e) => setData({ ...data, [parentKey]: { ...parent, [key]: e.target.value } })}
+            style={{ ...inputStyle, resize: "vertical" }}
+            onFocus={(e) => {
+              e.target.style.borderColor = "#D4AF37";
+              e.target.style.boxShadow = "0 0 0 3px rgba(212,175,55,0.1)";
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = "rgba(212,175,55,0.2)";
+              e.target.style.boxShadow = "inset 0 2px 4px rgba(0,0,0,0.02)";
+            }}
+          />
+        ) : (
+          <input
+            type={type}
+            value={parent[key] || ""}
+            onChange={(e) => setData({ ...data, [parentKey]: { ...parent, [key]: e.target.value } })}
+            style={inputStyle}
+            onFocus={(e) => {
+              e.target.style.borderColor = "#D4AF37";
+              e.target.style.boxShadow = "0 0 0 3px rgba(212,175,55,0.1)";
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = "rgba(212,175,55,0.2)";
+              e.target.style.boxShadow = "inset 0 2px 4px rgba(0,0,0,0.02)";
+            }}
+          />
+        )}
+      </div>
+    );
+  };
 
   return (
     <div style={{ padding: "clamp(1rem, 2.2vw, 1.75rem)", minHeight: "100vh", background: "linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(212,175,55,0.05) 100%)" }}>
@@ -170,7 +173,7 @@ export default function VenueAdminPage() {
               📍
             </span>
             <p style={{ fontSize: "0.78rem", letterSpacing: "0.22em", textTransform: "uppercase", color: "#A8881E", fontWeight: 600 }}>
-              Venue
+              Venue Setup
             </p>
           </div>
           <h1 className="font-heading" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", lineHeight: 1.1, color: "#3A2E2A", fontWeight: 600 }}>
@@ -179,20 +182,56 @@ export default function VenueAdminPage() {
         </motion.section>
 
         <div className="grid grid-cols-1 gap-5 lg:gap-6">
+          {/* Groom Venue */}
           <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-2xl">🗺️</span>
-              <h2 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 600, color: "#3A2E2A" }}>Location Information</h2>
+              <span className="text-2xl">🤵</span>
+              <h2 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 600, color: "#3A2E2A" }}>Groom's Venue</h2>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="flex flex-col gap-5">
-                {field("name", "Venue Name")}
-                {field("address", "Full Address", "text", 4)}
+                {nestedField("groomVenue", "name", "Venue Name")}
+                {nestedField("groomVenue", "address", "Full Address", "text", 4)}
               </div>
               <div className="flex flex-col gap-5">
-                {field("googleMapLink", "Google Maps Link", "url")}
-                {field("googleMapEmbed", "Google Maps Embed URL", "url")}
+                {nestedField("groomVenue", "googleMapLink", "Google Maps Link", "url")}
+                {nestedField("groomVenue", "googleMapEmbed", "Google Maps Embed URL", "url")}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Bride Venue */}
+          <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-2xl">👰</span>
+              <h2 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 600, color: "#3A2E2A" }}>Bride's Venue</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="flex flex-col gap-5">
+                {nestedField("brideVenue", "name", "Venue Name")}
+                {nestedField("brideVenue", "address", "Full Address", "text", 4)}
+              </div>
+              <div className="flex flex-col gap-5">
+                {nestedField("brideVenue", "googleMapLink", "Google Maps Link", "url")}
+                {nestedField("brideVenue", "googleMapEmbed", "Google Maps Embed URL", "url")}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Nikkah Venue */}
+          <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-2xl">🕌</span>
+              <h2 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 600, color: "#3A2E2A" }}>Nikkah Venue</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="flex flex-col gap-5">
+                {nestedField("nikkahVenue", "name", "Venue Name")}
+                {nestedField("nikkahVenue", "address", "Full Address", "text", 4)}
+              </div>
+              <div className="flex flex-col gap-5">
+                {nestedField("nikkahVenue", "googleMapLink", "Google Maps Link", "url")}
+                {nestedField("nikkahVenue", "googleMapEmbed", "Google Maps Embed URL", "url")}
               </div>
             </div>
           </motion.div>
@@ -202,15 +241,13 @@ export default function VenueAdminPage() {
           className="flex flex-col sm:flex-row items-center gap-4 mt-2 pb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.4 }}
         >
           <div className="w-full sm:w-auto">
             <GoldButton onClick={handleSave} disabled={saving}>
               {saving ? "Saving Changes..." : "Save All Details"}
             </GoldButton>
           </div>
-
-
         </motion.div>
       </div>
     </div>

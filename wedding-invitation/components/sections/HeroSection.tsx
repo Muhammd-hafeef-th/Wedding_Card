@@ -2,15 +2,14 @@
 // components/sections/HeroSection.tsx
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { WeddingData } from "@/types";
-
+import { WeddingData, VenueData } from "@/types";
 
 interface HeroSectionProps {
   wedding: WeddingData;
+  venue?: VenueData;
 }
 
-
-export default function HeroSection({ wedding }: HeroSectionProps) {
+export default function HeroSection({ wedding, venue }: HeroSectionProps) {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -19,8 +18,11 @@ export default function HeroSection({ wedding }: HeroSectionProps) {
   const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.8], [1, 0.95]);
 
+  const targetDateStr = wedding.nikkahDate || wedding.date;
+  const targetTimeStr = wedding.nikkahTime || wedding.time;
+  const targetVenueStr = venue?.nikkahVenue?.name || wedding.venue;
 
-  const dateObj = new Date(wedding.date);
+  const dateObj = new Date(targetDateStr);
   const dayName = dateObj.toLocaleDateString("en-US", { weekday: "long" });
   const dayNum = dateObj.getDate();
   const monthYear = dateObj.toLocaleDateString("en-US", {
@@ -154,7 +156,7 @@ export default function HeroSection({ wedding }: HeroSectionProps) {
           >
             <div className="flex flex-col items-end justify-center text-right">
               <span className="font-heading text-[10px] md:text-sm lg:text-xs tracking-[0.2em] uppercase leading-tight" style={{ color: "var(--text-main)" }}>{dayName}</span>
-              <span className="font-heading text-[0.65rem] md:text-xs lg:text-[10px] tracking-[0.1em] mt-1" style={{ color: "var(--text-muted)" }}>{wedding.time}</span>
+              <span className="font-heading text-[0.65rem] md:text-xs lg:text-[10px] tracking-[0.1em] mt-1" style={{ color: "var(--text-muted)" }}>{targetTimeStr}</span>
             </div>
 
             <div className="flex flex-col items-center justify-center px-2">
@@ -176,7 +178,7 @@ export default function HeroSection({ wedding }: HeroSectionProps) {
             className="flex flex-col items-center gap-2 md:gap-4 lg:gap-2 mt-8 mb-12"
           >
             <span className="font-heading text-[0.65rem] md:text-xs lg:text-[10px] tracking-[0.3em] uppercase" style={{ color: "var(--gold-light)" }}>Nikah At</span>
-            <span className="font-heading text-xs md:text-lg lg:text-sm tracking-[0.1em] uppercase" style={{ color: "var(--text-main)" }}>{wedding.venue}</span>
+            <span className="font-heading text-xs md:text-lg lg:text-sm tracking-[0.1em] uppercase" style={{ color: "var(--text-main)" }}>{targetVenueStr}</span>
           </motion.div>
 
 

@@ -79,6 +79,21 @@ export default function FamilySection({ wedding }: FamilySectionProps) {
                   </p>
                 </>
               )}
+
+              {/* Bride Siblings */}
+              {wedding.brideSiblings && wedding.brideSiblings.length > 0 && (
+                <>
+                  <div className="family-divider" style={{ marginTop: '1rem', marginBottom: '1rem' }} />
+                  <span className="family-grandparent-label">Siblings</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                    {wedding.brideSiblings.map((sibling, idx) => (
+                      <p key={idx} className="family-grandparent-names" style={{ marginBottom: 0 }}>
+                        {sibling}
+                      </p>
+                    ))}
+                  </div>
+                </>
+              )}
             </motion.div>
 
             {/* Groom's Family Card */}
@@ -123,6 +138,21 @@ export default function FamilySection({ wedding }: FamilySectionProps) {
                   <p className="family-grandparent-names" style={{ marginBottom: 0 }}>
                     {wedding.groomMaternalGrandparents}
                   </p>
+                </>
+              )}
+
+              {/* Groom Siblings */}
+              {wedding.groomSiblings && wedding.groomSiblings.length > 0 && (
+                <>
+                  <div className="family-divider" style={{ marginTop: '1rem', marginBottom: '1rem' }} />
+                  <span className="family-grandparent-label">Siblings</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                    {wedding.groomSiblings.map((sibling, idx) => (
+                      <p key={idx} className="family-grandparent-names" style={{ marginBottom: 0 }}>
+                        {sibling}
+                      </p>
+                    ))}
+                  </div>
                 </>
               )}
             </motion.div>
