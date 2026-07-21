@@ -10,9 +10,10 @@ interface VenueSectionProps {
 
 export default function VenueSection({ venue }: VenueSectionProps) {
   const hasSpecificVenues = !!(
-    venue.groomVenue?.name ||
+    venue.nikkahVenue?.name ||
     venue.brideVenue?.name ||
-    venue.nikkahVenue?.name
+    venue.groomVenue?.name
+
   );
 
   const renderVenueCard = (detail: VenueDetail | undefined, title: string, emoji: string) => {
@@ -103,9 +104,11 @@ export default function VenueSection({ venue }: VenueSectionProps) {
         >
           {hasSpecificVenues ? (
             <>
-              {renderVenueCard(venue.groomVenue, "Groom's Venue", "🤵")}
-              {renderVenueCard(venue.brideVenue, "Bride's Venue", "👰")}
               {renderVenueCard(venue.nikkahVenue, "Nikkah Venue", "🕌")}
+              {renderVenueCard(venue.brideVenue, "Bride's Venue", "👰")}
+              {renderVenueCard(venue.groomVenue, "Groom's Venue", "🤵")}
+
+
             </>
           ) : (
             <motion.div
@@ -142,8 +145,7 @@ export default function VenueSection({ venue }: VenueSectionProps) {
                   href={
                     venue.googleMapLink ||
                     `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                      `${venue.name || "Sumangali Convention"} ${
-                        venue.address || ""
+                      `${venue.name || "Sumangali Convention"} ${venue.address || ""
                       }`
                     )}`
                   }
