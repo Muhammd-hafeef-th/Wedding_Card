@@ -186,7 +186,7 @@ export default function VenueAdminPage() {
           <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
             <div className="flex items-center gap-3 mb-2">
               <span className="text-2xl">🤵</span>
-              <h2 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 600, color: "#3A2E2A" }}>Groom's Venue</h2>
+              <h2 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 600, color: "#3A2E2A" }}>Groom&apos;s Venue</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="flex flex-col gap-5">
@@ -204,7 +204,7 @@ export default function VenueAdminPage() {
           <motion.div style={cardStyle} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
             <div className="flex items-center gap-3 mb-2">
               <span className="text-2xl">👰</span>
-              <h2 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 600, color: "#3A2E2A" }}>Bride's Venue</h2>
+              <h2 className="font-heading text-xl sm:text-2xl" style={{ fontWeight: 600, color: "#3A2E2A" }}>Bride&apos;s Venue</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="flex flex-col gap-5">

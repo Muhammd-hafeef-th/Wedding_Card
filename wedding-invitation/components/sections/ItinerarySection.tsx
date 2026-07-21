@@ -284,7 +284,7 @@ export default function ItinerarySection({ wedding, venue }: ItinerarySectionPro
                 {venue.groomVenue?.name && (
                   <div className="itinerary-row align-start">
                     <span className="itinerary-label" style={{ marginTop: "2px" }}>
-                      Groom's Venue
+                      Groom&apos;s Venue
                     </span>
                     <div className="itinerary-value" style={{ display: "flex", flexDirection: "column" }}>
                       <span>{venue.groomVenue.name}</span>
@@ -295,7 +295,7 @@ export default function ItinerarySection({ wedding, venue }: ItinerarySectionPro
                 {venue.brideVenue?.name && (
                   <div className="itinerary-row align-start">
                     <span className="itinerary-label" style={{ marginTop: "2px", lineHeight: "1.2" }}>
-                      Bride's Venue
+                      Bride&apos;s Venue
                     </span>
                     <div className="itinerary-value" style={{ display: "flex", flexDirection: "column" }}>
                       <span>{venue.brideVenue.name}</span>
